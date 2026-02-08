@@ -183,6 +183,11 @@ fn main() {
         None => println!("timeout=none"),
     }
 
+    // 元组是 Rust 内建类型（这里是 (&str, i32)），可类比 C++ std::pair 语义。
+    // Rust 访问方式是 .0 / .1，而不是 .first / .second。
+    let pair = ("worker", 8);
+    println!("tuple pair: role={}, count={}", pair.0, pair.1);
+
     let safe_runner = TaskRunner::new("indexer", Mode::Safe);
     println!("safe describe={}", safe_runner.describe());
 }
