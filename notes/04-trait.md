@@ -42,7 +42,7 @@ cargo run --bin 04_trait
 - trait 在 Rust 里既是“接口”，也是泛型约束（这点比 Go/Java 更统一）。
 - `enum + match` 是状态建模主力，能替代很多 if/else + magic number。
 
-## 6. 后续方向
+## 6. 扩展学习方向
 
 - 对比 `&impl Trait`（静态分发）和 `&dyn Trait`（动态分发）。
 - 补一节对象安全（object safety）和性能模型。
