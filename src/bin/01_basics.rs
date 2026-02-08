@@ -10,6 +10,7 @@ enum Mode {
 
 struct TaskRunner {
     // 字段语法是 `字段名: 类型`，和 C/C++ 的 `类型 变量名` 顺序不同。
+    // 这个有点类似Golang
     name: String,
     mode: Mode,
 }
@@ -81,12 +82,34 @@ fn main() {
         println!("for i={i}");
     }
 
+    for i in 0..10 {
+        if i == 4 {
+            println!("for break at i={i}");
+            break;
+        }
+    }
+
     let mut n = 0;
     while n < 2 {
         println!("while n={n}");
         n += 1;
     }
 
+    let mut m = 0;
+    while m < 10 {
+        m += 1;
+        if m % 2 == 0 {
+            continue;
+        }
+        if m > 5 {
+            println!("while break at m={m}");
+            break;
+        }
+        println!("while odd m={m}");
+    }
+
+    // loop 是无条件循环，语义上等价于 while true / for(;;)。
+    // 这里演示 break 携带返回值，赋给 stop_at。
     let mut attempts = 0;
     let stop_at = loop {
         attempts += 1;
@@ -95,6 +118,15 @@ fn main() {
         }
     };
     println!("loop stop_at={stop_at}");
+
+    'outer: for x in 0..3 {
+        for y in 0..3 {
+            if x == 1 && y == 1 {
+                println!("break outer at x={x}, y={y}");
+                break 'outer;
+            }
+        }
+    }
 
     // "类" 对应：struct + impl
     let runner = TaskRunner::new("parser", Mode::Fast);

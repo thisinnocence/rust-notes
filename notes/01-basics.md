@@ -29,14 +29,33 @@ cargo run --bin 01_basics
 
 - `if` 表达式：直接返回值给 `level`。
 - `for`：区间迭代 `0..3`。
-- `while`：条件循环。
-- `loop` + `break value`：无限循环并返回值。
+- `while`：条件循环（示例含 `continue` 与 `break`）。
+- `loop` + `break value`：无条件循环并返回值。
+- 标签循环：`break 'outer` 直接跳出外层循环。
 - `match`：按区间分类分数。
 
 和 C/C++ 对照：
 
 - Rust 的 `if` / `match` 是表达式，不只是语句。
 - `match` 必须穷尽，减少漏分支。
+
+关于你问的这段：
+
+```rust
+let stop_at = loop {
+    attempts += 1;
+    if attempts >= MAX_RETRY {
+        break attempts;
+    }
+};
+```
+
+- 你的理解正确：`loop {}` 语义上就是 Rust 版 `while (true)` / `for(;;)`。
+- `break` 不需要和 `loop` 强绑定，`for` / `while` / `loop` 都可以用 `break`。
+- 但 `break value`（带返回值）主要用于 `loop` 表达式，用于把值返回给外层绑定（这里是 `stop_at`）。
+- `for` / `while` 通常只用 `break;`（不带值），它们本身不作为“返回某个值的表达式”来用。
+- `continue` 也适用于三类循环，表示跳过本轮进入下一轮。
+- 若是嵌套循环，可用标签写法 `break 'outer` 精确跳出指定层。
 
 ## 3. 函数
 
