@@ -73,7 +73,9 @@
 
 对应示例：[`../src/bin/11_async_advanced.rs`](../src/bin/11_async_advanced.rs)。
 
-- 上半段：`sync_channel` 展示背压与取消信号协作。
+- 上半段：有界 `sync_channel` 展示背压与取消信号协作。
+- `cancelled` 原子标志：取消与 shutdown 信号。
+- `recv_timeout`：timeout 风格等待。
 - 下半段：手写 `Future`（`DelayTicks`）+ `block_on`，演示 `Pin`/轮询/取消状态。
 - 目标是建立底层心智，不是替代 `tokio` 生产实践。
 
@@ -90,12 +92,3 @@
 - 限流控制“并发在途数量”（例如 semaphore 思路）。
 - 背压控制“生产速度不超过消费能力”（有界队列）。
 - 两者配合才能避免高峰期内存和尾延迟失控。
-
-## 9. 配套代码要点
-
-对应示例：[`../src/bin/11_async_advanced.rs`](../src/bin/11_async_advanced.rs)。
-
-- 有界 `sync_channel`：背压基线。
-- `cancelled` 原子标志：取消与 shutdown 信号。
-- `recv_timeout`：timeout 风格等待。
-- `DelayTicks` + `block_on`：Future/Pin 最小心智。
