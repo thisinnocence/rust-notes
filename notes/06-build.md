@@ -1,4 +1,4 @@
-# 05 - 构建与生态
+# 06 - 构建与生态
 
 本章把两件常被分开讲的事合在一起：
 
@@ -145,7 +145,7 @@ Rust 对 AI 协作开发的价值在于：
 
 ## 13. 配套代码
 
-对应示例：[`../src/bin/05_build.rs`](../src/bin/05_build.rs)。
+对应示例：[`../src/bin/06_build.rs`](../src/bin/06_build.rs)。
 
 - 用最小运行代码把构建信息可视化：
   - `cfg!(target_os/target_arch)`：目标平台分支。
@@ -153,7 +153,7 @@ Rust 对 AI 协作开发的价值在于：
   - `CARGO_PKG_*`：Cargo 注入元数据。
 - 文件里注释解释了 bin crate、链接边界与 no_std 分流认知。
 - 运行：
-  - `cargo run --bin 05_build`
+  - `cargo run --bin 06_build`
 
 ## 14. 参考链接
 

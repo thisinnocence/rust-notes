@@ -1,4 +1,4 @@
-# 14 - 生命周期
+# 03 - 生命周期
 
 本章目标：把生命周期从“语法恐惧”变成“接口约束工具”。
 
@@ -124,7 +124,7 @@ Rust 常见省略规则（高频）：
 
 ## 11. 配套代码
 
-对应示例：[`../src/bin/14_lifetime.rs`](../src/bin/14_lifetime.rs)。
+对应示例：[`../src/bin/03_lifetime.rs`](../src/bin/03_lifetime.rs)。
 
 - `pick_first`：显式生命周期关联输入与输出。
 - `pick_first_elided`：演示省略规则与等价写法。

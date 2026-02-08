@@ -1,14 +1,14 @@
-//! 05_build: 通过可运行示例理解 Rust 构建系统关键点。
+//! 06_build: 通过可运行示例理解 Rust 构建系统关键点。
 //!
 //! 运行：
-//! cargo run --bin 05_build
+//! cargo run --bin 06_build
 //!
 //! 你可以配合这些命令观察构建行为：
-//! 1) cargo check --bin 05_build
-//! 2) cargo build --bin 05_build
-//! 3) cargo build --release --bin 05_build
-//! 4) file target/debug/05_build
-//! 5) ldd target/debug/05_build    (Linux + 动态链接时可用)
+//! 1) cargo check --bin 06_build
+//! 2) cargo build --bin 06_build
+//! 3) cargo build --release --bin 06_build
+//! 4) file target/debug/06_build
+//! 5) ldd target/debug/06_build    (Linux + 动态链接时可用)
 
 use std::env;
 

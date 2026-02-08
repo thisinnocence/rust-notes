@@ -1,7 +1,7 @@
-//! 06_style: 用最小示例展示 Rust 社区常见风格约定。
+//! 07_style: 用最小示例展示 Rust 社区常见风格约定。
 //!
 //! 运行：
-//! cargo run --bin 06_style
+//! cargo run --bin 07_style
 
 use std::time::Duration;
 

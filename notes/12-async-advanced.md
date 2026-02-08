@@ -1,4 +1,4 @@
-# 11 - 异步进阶：Pin、取消与背压
+# 12 - 异步进阶：Pin、取消与背压
 
 本章目标：从“会写 async”到“能稳定运行 async 系统”。
 
@@ -71,7 +71,7 @@
 
 ## 6. 配套代码
 
-对应示例：[`../src/bin/11_async_advanced.rs`](../src/bin/11_async_advanced.rs)。
+对应示例：[`../src/bin/12_async_advanced.rs`](../src/bin/12_async_advanced.rs)。
 
 - 上半段：有界 `sync_channel` 展示背压与取消信号协作。
 - `cancelled` 原子标志：取消与 shutdown 信号。

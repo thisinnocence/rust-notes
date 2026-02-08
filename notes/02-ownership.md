@@ -126,7 +126,7 @@ cargo run --bin 02_ownership
   - 内核/驱动/bare-metal 等底层系统代码
 - 这些场景常伴随 `unsafe`，并要求把安全前提写成清晰不变量。
 
-本章不展开 `unsafe` 细节，详见 [`notes/12-unsafe.md`](12-unsafe.md)。
+本章不展开 `unsafe` 细节，详见 [`notes/13-unsafe.md`](13-unsafe.md)。
 
 ### 7.1 Rust 里有哪些“堆内存管理入口”
 

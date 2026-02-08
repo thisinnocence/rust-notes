@@ -1,9 +1,9 @@
-# 04 - Struct / Enum / Trait
+# 05 - Struct / Enum / Trait
 
 运行：
 
 ```bash
-cargo run --bin 04_trait
+cargo run --bin 05_trait
 ```
 
 ## 1. 本课核心
@@ -143,7 +143,7 @@ Rust 倾向把“数据”和“行为能力”分开建模：
 
 ## 8. 配套代码
 
-对应示例：[`../src/bin/04_trait.rs`](../src/bin/04_trait.rs)。
+对应示例：[`../src/bin/05_trait.rs`](../src/bin/05_trait.rs)。
 
 - `print_desc_static(&impl Describe)`：静态分发示例。
 - `print_desc_dynamic(&dyn Describe)`：动态分发示例。

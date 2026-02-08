@@ -1,4 +1,4 @@
-# 12 - unsafe 边界
+# 13 - unsafe 边界
 
 本章目标：不是鼓励“多用 unsafe”，而是强调“把 unsafe 缩到最小且可证明”。
 
@@ -98,7 +98,7 @@ Rust 里这些典型动作需要 `unsafe`：
 
 ## 10. 配套代码
 
-对应示例：[`../src/bin/12_unsafe_boundary.rs`](../src/bin/12_unsafe_boundary.rs)。
+对应示例：[`../src/bin/13_unsafe_boundary.rs`](../src/bin/13_unsafe_boundary.rs)。
 
 - 文件顶部给了 `SAFETY TEMPLATE`，可作为后续 unsafe 注释模板。
 - `read_u32_unaligned` 展示 `unsafe fn` + 最小危险操作封装。

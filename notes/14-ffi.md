@@ -1,4 +1,4 @@
-# 13 - FFI
+# 14 - FFI
 
 本章目标：掌握 Rust 与 C 互调的最小正确姿势。
 
@@ -84,7 +84,7 @@
 
 ## 9. 配套代码
 
-对应示例：[`../src/bin/13_ffi.rs`](../src/bin/13_ffi.rs)。
+对应示例：[`../src/bin/14_ffi.rs`](../src/bin/14_ffi.rs)。
 
 - `#[repr(C)] struct Pair`：稳定布局示例。
 - `unsafe extern "C" fn sum_pair(...) -> i32`：C ABI 导出 + 返回码协议。

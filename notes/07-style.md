@@ -1,4 +1,4 @@
-# 06 - 代码风格
+# 07 - 代码风格
 
 这份文档单独讨论 coding style，不讲语法技巧，而讲工程治理：
 
@@ -122,7 +122,7 @@ Rust 没有像 Go 那样“绝对单一”的风格工具文化，但工程效�
 
 ## 10. 配套代码
 
-对应示例：[`../src/bin/06_style.rs`](../src/bin/06_style.rs)。
+对应示例：[`../src/bin/07_style.rs`](../src/bin/07_style.rs)。
 
 - 这个文件只做一件事：把“命名/缩进/格式”放进可运行代码里直观看。
 - 覆盖点：
@@ -131,4 +131,4 @@ Rust 没有像 Go 那样“绝对单一”的风格工具文化，但工程效�
   - 常量：`SCREAMING_SNAKE_CASE`
   - `match` 与 `impl` 常见排布方式
 - 运行命令：
-  - `cargo run --bin 06_style`
+  - `cargo run --bin 07_style`

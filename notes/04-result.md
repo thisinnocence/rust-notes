@@ -1,9 +1,9 @@
-# 03 - Result 与错误处理
+# 04 - Result 与错误处理
 
 运行：
 
 ```bash
-cargo run --bin 03_result
+cargo run --bin 04_result
 ```
 
 ## 1. `Result<T, E>` 到底是什么
