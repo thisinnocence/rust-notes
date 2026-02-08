@@ -22,7 +22,33 @@ impl Describe for Config {
     }
 }
 
-// 关联类型示例：实现者决定输出类型
+// 默认方法 + 扩展 trait 示例。
+trait Summary {
+    fn summary(&self) -> String {
+        format!("summary: {}", self.describe())
+    }
+
+    fn describe(&self) -> String;
+}
+
+impl Summary for Config {
+    fn describe(&self) -> String {
+        Describe::describe(self)
+    }
+}
+
+// blanket impl 示例：给所有实现 Describe 的类型统一提供 Label 能力。
+trait Label {
+    fn label(&self) -> &'static str;
+}
+
+impl<T: Describe> Label for T {
+    fn label(&self) -> &'static str {
+        "describable"
+    }
+}
+
+// 关联类型示例：实现者决定输出类型。
 trait ValueType {
     type Output;
     fn value(&self) -> Self::Output;
@@ -84,6 +110,8 @@ fn main() {
     // dyn Trait: 动态分发
     print_desc_dynamic(&c2);
 
+    println!("summary={}", c1.summary());
+    println!("label={}", c1.label());
     println!("associated type value={}", c1.value());
 
     let packet = Packet {
@@ -94,4 +122,8 @@ fn main() {
     // 对象安全失败示例（仅注释，不参与编译）：
     // trait Bad { fn new() -> Self; }
     // let _: &dyn Bad; // 不成立：返回 Self 的 trait 方法通常不对象安全。
+
+    // orphan rule 示例（仅注释，不参与编译）：
+    // impl std::fmt::Display for Vec<u8> { ... }
+    // 不允许：外部 trait + 外部类型，违反孤儿规则。
 }

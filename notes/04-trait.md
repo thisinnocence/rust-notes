@@ -136,3 +136,40 @@ Rust 倾向把“数据”和“行为能力”分开建模：
 - `trait ValueType { type Output; ... }`：关联类型示例。
 - `trait ChunkSource { type Chunk<'a>; ... }`：GAT（泛型关联类型）最小示例。
 - 文件末尾注释里有对象安全失败示例（不参与编译）。
+
+## 9. 更深一层：blanket impl / orphan rule / coherence
+
+### 9.1 blanket impl（批量实现）
+
+- 指“为一类满足约束的类型统一实现 trait”。
+- 常见形式：`impl<T: Bound> Trait for T`。
+- 优势：减少样板，实现可复用能力注入。
+
+### 9.2 orphan rule（孤儿规则）
+
+- 你不能“给外部 trait 实现到外部类型”上。
+- 至少 trait 或类型有一方必须是本 crate 定义。
+- 目的：避免跨 crate 冲突实现。
+
+### 9.3 coherence（一致性）
+
+- 编译器要求“某个类型的某个 trait 实现必须唯一可判定”。
+- 防止出现多个同样匹配的实现导致歧义。
+
+## 10. 默认方法与扩展 trait
+
+- trait 可给方法提供默认实现，减少重复代码。
+- 扩展 trait 常用于给已有类型追加“领域便捷方法”。
+- 这是 Rust 里替代“继承工具类”的常见方式。
+
+## 11. trait object 还是 enum + match
+
+| 方案 | 优势 | 代价 |
+| --- | --- | --- |
+| `dyn Trait` | 运行时可扩展，插件化友好 | 动态分发开销、对象安全限制 |
+| `enum + match` | 穷尽分支、静态优化更好 | 新增变体需要改调用方匹配 |
+
+经验：
+
+- 已知有限类型集合，优先 `enum + match`。
+- 需要运行时扩展，优先 `dyn Trait`。
