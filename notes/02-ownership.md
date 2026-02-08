@@ -43,6 +43,12 @@ cargo run --bin 02_ownership
 
 先看一张迁移表：
 
+术语说明（首次出现）：
+
+- `Rc` = `Reference Counted`，单线程引用计数智能指针。
+- `Arc` = `Atomically Reference Counted`，原子引用计数智能指针，支持多线程共享。
+- 两者都用于“共享所有权”语义；是否跨线程是主要分界。
+
 | C++ 抽象 | Rust 对应 | 关键差异 |
 | --- | --- | --- |
 | `T`（栈对象） | `T`（拥有值） | 都是 RAII；Rust move 默认更强制 |
