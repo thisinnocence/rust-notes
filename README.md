@@ -44,6 +44,7 @@
 | 15 | 测试策略 | [`notes/15-testing.md`](notes/15-testing.md) | [`src/bin/15_testing.rs`](src/bin/15_testing.rs) |
 | 16 | 性能分析与优化 | [`notes/16-perf.md`](notes/16-perf.md) | [`src/bin/16_perf.rs`](src/bin/16_perf.rs) |
 | 17 | 错误处理工程化 | [`notes/17-error-handling.md`](notes/17-error-handling.md) | [`src/bin/17_error.rs`](src/bin/17_error.rs) |
+| 18 | 常用标准库速览 | [`notes/18-stdlib.md`](notes/18-stdlib.md) | [`src/bin/18_stdlib.rs`](src/bin/18_stdlib.rs) |
 
 ## 常用命令
 
