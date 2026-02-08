@@ -36,7 +36,7 @@ cargo run --bin 04_trait
 - Rust 默认更偏静态分发（类似泛型实例化），Java 接口调用常见动态分派。
 - Rust `enum` 能力明显强于 Java 早期 `enum` 常量模型，更接近“代数数据类型”。
 
-## 5. 你可重点关注的迁移点
+## 5. 重点关注的迁移点
 
 - 不要先找“class 继承”对应物，先用 `struct + trait` 建模。
 - trait 在 Rust 里既是“接口”，也是泛型约束（这点比 Go/Java 更统一）。
@@ -84,7 +84,7 @@ cargo run --bin 04_trait
 
 ## 7. 对比 C/C++ class 继承：为什么现代语言更偏这个方向
 
-你关心的是“为什么不用传统继承树，而是 `struct + trait + enum`”。
+常见关注点是“为什么不用传统继承树，而是 `struct + trait + enum`”。
 
 ### 7.1 传统继承的优势与问题
 
@@ -147,7 +147,7 @@ Rust 倾向把“数据”和“行为能力”分开建模：
 
 ### 9.2 orphan rule（孤儿规则）
 
-- 你不能“给外部 trait 实现到外部类型”上。
+- 不能“给外部 trait 实现到外部类型”上。
 - 至少 trait 或类型有一方必须是本 crate 定义。
 - 目的：避免跨 crate 冲突实现。
 
