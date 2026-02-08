@@ -92,6 +92,10 @@ fn add(a: i32, b: i32) -> i32 {
     a + b
 }
 
+// Rust 没有 `switch` 关键字；这里用 `match` 做分支匹配。
+// `90..=100` 是闭区间（包含 100），`_` 是兜底分支。
+// 返回类型是 `&'static str`：`"A"` 这类字符串字面量存放在静态区，
+// 生命周期覆盖整个程序运行期，因此是 `'static`。
 fn classify(score: i32) -> &'static str {
     match score {
         90..=100 => "A",
