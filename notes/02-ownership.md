@@ -109,7 +109,20 @@ cargo run --bin 02_ownership
 - 对象释放通常在作用域结束时触发，时机可预测。
 - 代价是前期需要更明确地建模所有权与借用关系。
 
-## 7. 常见报错应对（Ownership 维度）
+## 7. Rust 还有手工内存管理与 `unsafe` 吗（简述）
+
+有，但不是默认路径。
+
+- 日常业务代码通常不需要手工管理内存块。
+- 在以下场景会进入显式/底层内存管理：
+  - FFI 边界（和 C 共享分配/释放约定）
+  - 自定义分配器、裸指针数据结构、内存池
+  - 内核/驱动/bare-metal 等底层系统代码
+- 这些场景常伴随 `unsafe`，并要求把安全前提写成清晰不变量。
+
+本章不展开 `unsafe` 细节，详见 `notes/12-unsafe.md`。
+
+## 8. 常见报错应对（Ownership 维度）
 
 - “use of moved value”：
   - 解决：改借用（`&T`/`&mut T`）或显式 `clone`。
@@ -118,14 +131,14 @@ cargo run --bin 02_ownership
 - 生命周期相关错误：
   - 解决：先简化函数签名，再明确返回借用来源。
 
-## 8. 配套代码怎么读（`src/bin/02_ownership.rs`）
+## 9. 配套代码怎么读（`src/bin/02_ownership.rs`）
 
 - `takes_ownership`：演示 move。
 - `borrow_read`：演示不可变借用。
 - `borrow_mut`：演示可变借用。
 - `clone` 对照：何时复制数据，何时只借用。
 
-## 9. 跨主题内容跳转
+## 10. 跨主题内容跳转
 
 - 错误模型（`Result<T, E>`、`?`）：见 `notes/03-result.md`。
 - trait/抽象设计：见 `notes/04-trait.md`。
