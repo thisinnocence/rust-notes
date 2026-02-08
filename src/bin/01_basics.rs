@@ -62,6 +62,7 @@ struct TaskRunner {
 }
 
 impl TaskRunner {
+    // `-> Self` 里的 `Self` 是类型层关键字，这里等价于 `TaskRunner`。
     fn new(name: &str, mode: Mode) -> Self {
         Self {
             name: name.to_string(),
@@ -69,6 +70,7 @@ impl TaskRunner {
         }
     }
 
+    // `&self` 里的 `self` 是值层接收者，表示当前实例的只读借用。
     fn run(&self, retries: u32) {
         println!("run name={}, mode={:?}, retries={retries}", self.name, self.mode);
     }

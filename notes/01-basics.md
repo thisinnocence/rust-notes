@@ -14,6 +14,7 @@ cargo run --bin 01_basics
 - 类型与抽象：`struct`、`enum`、`trait`、`type`、`impl`
 - 流程控制：`if`、`else`、`match`、`for`、`while`、`loop`、`break`、`continue`、`return`
 - 模块与可见性：`mod`、`use`、`pub`、`crate`、`super`、`self`
+- 类型自指：`Self`（当前实现类型）
 - 错误与空值：`Result`、`Option`、`match`、`if let`
 - 所有权相关：`move`、`ref`、`as`
 - 并发与边界：`async`、`await`、`unsafe`
@@ -23,6 +24,7 @@ cargo run --bin 01_basics
 - Rust 变量默认不可变；C/C++ 变量默认可变。
 - `const` 是编译期常量，不是 C 的宏替换。
 - `let score = score;` 是 shadowing（新绑定），不是同一变量改类型。
+- `Self` 是类型层关键字；`self` 是值层方法接收者。
 
 ## 2. 常见语法符号速览
 
@@ -123,6 +125,11 @@ let stop_at = loop {
 - `&x` 是借用，得到 `&T`（引用）。
 - 不是 C 的裸指针语义；受借用规则保护。
 - `&T` 只读，`&mut T` 可写且独占。
+
+`Self` / `self` 的语义：
+
+- `Self`：当前实现块里的“当前类型”，如 `impl TaskRunner` 中 `Self == TaskRunner`。
+- `self`：方法接收者，表示当前实例（可写成 `self`、`&self`、`&mut self`）。
 
 ## 6. Struct / Trait：Rust 对应“类与接口”的方式
 
