@@ -163,6 +163,24 @@ Rust 没有 class，常用组合是：
 - `sum_i32!(10, 20)` 演示了一个最小 `macro_rules!` 宏。
 - 它在编译期展开成表达式，再进入正常类型检查流程。
 
+### `=>` 这个语法是什么意思（你有 TS 背景）
+
+在 Rust 里，`=>` 不是“箭头函数”定义符号，主要见于两类场景：
+
+- `match` 分支：`pattern => expression`
+- `macro_rules!` 规则：`(pattern) => { expansion }`
+
+例子对照：
+
+- `match score { 90..=100 => "A", _ => "D" }`
+- `macro_rules! sum_i32 { ($a:expr, $b:expr) => { $a + $b }; }`
+
+和 TypeScript 的区别：
+
+- TS：`(x) => x + 1` 是定义函数/闭包。
+- Rust：`=>` 更像“映射箭头”，表示“左边匹配到，右边产出什么”。
+- Rust 的函数/闭包参数和返回值常见写法是 `|x| x + 1`（闭包）或 `fn f(x: i32) -> i32`（函数），不是 `=>`。
+
 ### `name: String` 为什么类型在后面
 
 - Rust 的变量/字段声明统一是 `name: Type`。
