@@ -197,6 +197,7 @@ fn main() {
     // "接口" 对应：trait
     println!("describe={}", runner.describe());
     // 这里的 `println!` / `format!` / `matches!` / `write!` 末尾 `!` 表示“宏调用”。
+    // 注意拼写是 `matches!`，不是 `matchs!`。
     println!("runner mode debug={:?}", runner.mode);
     println!("runner mode display={}", runner.mode);
     let is_fast = matches!(runner.mode, Mode::Fast);

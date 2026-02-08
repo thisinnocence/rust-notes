@@ -57,7 +57,19 @@ cargo run --bin 18_stdlib
 - Rust 倾向 `iter().map().filter().collect()` 管道式写法。
 - 和 STL 算法库思想接近，但 Rust 写法更统一在迭代器 trait 上。
 
-## 6. 配套代码
+## 6. 常见标准库宏
+
+| 宏 | 作用 | 备注 |
+| --- | --- | --- |
+| `println!` / `print!` | 格式化输出到标准输出 | 类似 `printf` 家族，但编译期检查格式参数 |
+| `eprintln!` / `eprint!` | 输出到标准错误 | 适合错误日志 |
+| `format!` | 生成 `String` | 不直接打印 |
+| `vec!` | 快速创建 `Vec<T>` | 如 `vec![1, 2, 3]` |
+| `matches!` | 模式匹配并返回 `bool` | 注意拼写是 `matches!` |
+| `assert!` / `assert_eq!` / `debug_assert!` | 断言检查 | `debug_assert!` 仅 debug 构建默认启用 |
+| `dbg!` | 调试打印并返回原值 | 临时排查很方便 |
+
+## 7. 配套代码
 
 对应示例：[`../src/bin/18_stdlib.rs`](../src/bin/18_stdlib.rs)。
 
@@ -65,7 +77,7 @@ cargo run --bin 18_stdlib
 - `sort_demo`：稳定排序、自定义排序、按 key 排序。
 - `map_set_demo`：`HashMap` 与 `HashSet` 基本操作。
 
-## 7. 小结
+## 8. 小结
 
 - 相比 C，Rust 的字符串操作在安全性与易用性上通常是显著提升。
 - 相比 C++，Rust 在默认边界检查、所有权语义和 API 一致性上常更直接，学习曲线更平滑。
