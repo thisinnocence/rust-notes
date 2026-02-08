@@ -258,6 +258,17 @@ Rust 默认并不把所有函数都当作 C 可见符号导出。
 - 保留 C/汇编启动和 BSP，把新驱动/协议栈用 Rust 写。
 - 优先选择“生态强势芯片”做首批项目（如 Cortex-M 主流板卡、ESP32-C3/C6）。
 - 在项目早期就固定工具链版本（Rust toolchain + probe + linker）并冻结构建镜像。
+
+## 12. 配套代码怎么读（`src/bin/05_build.rs`）
+
+- 目的：把“构建系统概念”落到可运行代码，不是语法炫技。
+- 覆盖点：
+  - `cfg!(target_os/target_arch)`：条件编译认知入口。
+  - `cfg!(debug_assertions)`：debug/release 差异入口。
+  - `CARGO_PKG_*` 环境变量：Cargo 与构建元数据注入。
+  - 注释里解释了 bin crate、默认链接路径与 no_std 分流。
+- 运行命令：
+  - `cargo run --bin 05_build`
 - 先建立一套可重复的烧录/调试/回归流程，再扩大 Rust 代码占比。
 
 ## 12. 参考链接（便于你继续深挖）
