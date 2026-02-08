@@ -18,10 +18,6 @@ cargo run --bin 02_ownership
 - Borrow = 临时借用资源，不转移所有权。
 - 生命周期检查 = 编译期证明“借用不会超过被借用值的生存期”。
 
-模块系统相关内容已拆分到独立章节：
-
-- `notes/08-module-system.md`
-
 你可重点对比：
 
 - C++ `std::move` 是显式表达移动；Rust 的 move 更“默认且一致”。
