@@ -47,6 +47,41 @@ cargo run --bin 04_trait
 - 对比 `&impl Trait`（静态分发）和 `&dyn Trait`（动态分发）。
 - 补一节对象安全（object safety）和性能模型。
 
+## 6.1 Trait 深水区（建议尽早建立心智）
+
+### 对象安全（Object Safety）
+
+- 只有对象安全 trait 才能做 `dyn Trait`。
+- 常见不满足对象安全的情况：
+- 方法返回 `Self`。
+- 方法是泛型方法（`fn f<T>(...)`）。
+
+结论：
+
+- 想做运行时多态（`dyn Trait`）时，先检查 trait 是否对象安全。
+
+### 关联类型（Associated Type）
+
+- 关联类型常用于表达“实现者决定具体类型”。
+- 和泛型参数相比，关联类型通常让接口更稳定、可读性更好。
+
+典型对比：
+
+- 泛型版本：`trait Parser<T> { ... }`
+- 关联类型版本：`trait Parser { type Output; ... }`
+
+### `impl Trait` vs `dyn Trait` 再强调
+
+| 方式 | 分发 | 成本模型 | 适用场景 |
+| --- | --- | --- | --- |
+| `impl Trait` | 静态分发 | 单态化，通常更利于内联优化 | 热路径、性能敏感 |
+| `dyn Trait` | 动态分发 | vtable 间接调用 | 插件化、运行时多态 |
+
+### 给系统程序员的建议
+
+- 默认先用 `impl Trait`（性能和简单性更稳）。
+- 确认需要运行时可替换能力时再引入 `dyn Trait`。
+
 ## 7. 对比 C/C++ class 继承：为什么现代语言更偏这个方向
 
 你关心的是“为什么不用传统继承树，而是 `struct + trait + enum`”。
