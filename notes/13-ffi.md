@@ -81,3 +81,10 @@
 - Rust 没有强制 VM/GC runtime，确实让它在系统层 FFI 更“直接可控”。
 - 但这不是 FFI 唯一价值来源；有 VM/runtime 的语言同样大量依赖 FFI 获得性能与生态互通。
 - 区别在于：Rust/C 场景通常更偏“系统边界与可控性”，Python/Java 更偏“生态扩展与性能热点下沉”。
+
+## 9. 配套代码怎么读（`src/bin/13_ffi.rs`）
+
+- `#[repr(C)] struct Pair`：稳定布局示例。
+- `unsafe extern "C" fn sum_pair(...) -> i32`：C ABI 导出 + 返回码协议。
+- 空指针检查体现边界防御。
+- 单测覆盖正常路径与空指针路径，作为最小 FFI 验证闭环。

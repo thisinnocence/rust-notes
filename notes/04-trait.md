@@ -128,3 +128,11 @@ Rust 倾向把“数据”和“行为能力”分开建模：
 - class 继承不是“错”，它在局部模型里依然有效。
 - 但在长期演进系统中，`struct + trait + enum` 通常更利于分层、替换和验证。
 - 可以把 Rust 这套方式理解为：把 OO 的“多态能力”保留，把“继承耦合成本”尽量剥离。
+
+## 8. 配套代码怎么读（`src/bin/04_trait.rs`）
+
+- `print_desc_static(&impl Describe)`：静态分发示例。
+- `print_desc_dynamic(&dyn Describe)`：动态分发示例。
+- `trait ValueType { type Output; ... }`：关联类型示例。
+- `trait ChunkSource { type Chunk<'a>; ... }`：GAT（泛型关联类型）最小示例。
+- 文件末尾注释里有对象安全失败示例（不参与编译）。

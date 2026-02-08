@@ -48,3 +48,9 @@
 ## 5. 一句话总结
 
 - async 进阶的核心不是语法，而是“生命周期管理 + 流量控制 + 可观测性”。
+
+## 6. 配套代码怎么读（`src/bin/19_async_advanced.rs`）
+
+- 上半段：`sync_channel` 展示背压与取消信号协作。
+- 下半段：手写 `Future`（`DelayTicks`）+ `block_on`，演示 `Pin`/轮询/取消状态。
+- 目标是建立底层心智，不是替代 `tokio` 生产实践。

@@ -36,6 +36,30 @@ impl ValueType for Config {
     }
 }
 
+// GAT 示例：关联类型也可以带生命周期参数。
+trait ChunkSource {
+    type Chunk<'a>
+    where
+        Self: 'a;
+
+    fn first_chunk<'a>(&'a self) -> Self::Chunk<'a>;
+}
+
+struct Packet {
+    data: Vec<u8>,
+}
+
+impl ChunkSource for Packet {
+    type Chunk<'a>
+        = &'a [u8]
+    where
+        Self: 'a;
+
+    fn first_chunk<'a>(&'a self) -> Self::Chunk<'a> {
+        &self.data[..self.data.len().min(4)]
+    }
+}
+
 fn print_desc_static(item: &impl Describe) {
     println!("static dispatch: {}", item.describe());
 }
@@ -61,4 +85,13 @@ fn main() {
     print_desc_dynamic(&c2);
 
     println!("associated type value={}", c1.value());
+
+    let packet = Packet {
+        data: vec![1, 2, 3, 4, 5, 6],
+    };
+    println!("gat first chunk={:?}", packet.first_chunk());
+
+    // 对象安全失败示例（仅注释，不参与编译）：
+    // trait Bad { fn new() -> Self; }
+    // let _: &dyn Bad; // 不成立：返回 Self 的 trait 方法通常不对象安全。
 }
