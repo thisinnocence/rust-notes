@@ -17,8 +17,19 @@ enum Mode {
 }
 
 impl fmt::Display for Mode {
+    // 这是在“为 Mode 实现 Display trait 要求的方法”。
+    // 它看起来像普通函数，但语义上是 trait 的接口实现，不是随便起名的函数。
+    // Display trait 规定：必须提供这个签名的 fmt 方法。
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // self: &self
+        // - 当前要被格式化输出的对象（这里就是 Mode::Fast / Mode::Safe）
+        // f: &mut fmt::Formatter<'_>
+        // - 格式化“写入器”，把最终文本写到这里，不是直接 println!
+        // -> fmt::Result
+        // - 返回格式化是否成功（本质是 Result<(), fmt::Error>）
         match self {
+            // write! 是宏：把字符串写进 f，而不是写到 stdout。
+            // 这里定义了 Display 的“用户可读”文本形式。
             Mode::Fast => write!(f, "fast"),
             Mode::Safe => write!(f, "safe"),
         }
