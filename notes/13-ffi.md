@@ -66,7 +66,7 @@
 
 - FFI 的重点不是“能调通”，而是“ABI 稳定 + 所有权清楚 + 错误语义清楚”。
 
-## 8. 没有 runtime/VM 才有价值吗？（对比 Python/C++/Java JNI）
+## 8. 没有 runtime/VM 才有价值吗？
 
 不是“只有无 runtime/无 VM 才有价值”，而是价值来源不同。
 

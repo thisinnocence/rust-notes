@@ -61,7 +61,7 @@ cargo run --bin 04_trait
 
 ## 6.1 Trait 进阶
 
-### 对象安全（Object Safety）
+### 对象安全 Object Safety
 
 - 只有对象安全 trait 才能做 `dyn Trait`。
 - 常见不满足对象安全的情况：
@@ -72,7 +72,7 @@ cargo run --bin 04_trait
 
 - 想做运行时多态（`dyn Trait`）时，先检查 trait 是否对象安全。
 
-### 关联类型（Associated Type）
+### 关联类型 Associated Type
 
 - 关联类型常用于表达“实现者决定具体类型”。
 - 和泛型参数相比，关联类型通常让接口更稳定、可读性更好。
@@ -153,19 +153,19 @@ Rust 倾向把“数据”和“行为能力”分开建模：
 
 ## 9. 更深一层：blanket impl / orphan rule / coherence
 
-### 9.1 blanket impl（批量实现）
+### 9.1 blanket impl 批量实现
 
 - 指“为一类满足约束的类型统一实现 trait”。
 - 常见形式：`impl<T: Bound> Trait for T`。
 - 优势：减少样板，实现可复用能力注入。
 
-### 9.2 orphan rule（孤儿规则）
+### 9.2 orphan rule 孤儿规则
 
 - 不能“给外部 trait 实现到外部类型”上。
 - 至少 trait 或类型有一方必须是本 crate 定义。
 - 目的：避免跨 crate 冲突实现。
 
-### 9.3 coherence（一致性）
+### 9.3 coherence 一致性
 
 - 编译器要求“某个类型的某个 trait 实现必须唯一可判定”。
 - 防止出现多个同样匹配的实现导致歧义。

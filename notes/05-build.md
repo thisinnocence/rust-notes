@@ -43,7 +43,7 @@ Rust 以 Cargo 统一“包管理 + 构建 + 工作流”：
 | Python | 解释执行 + 虚拟环境 | pip/venv/lock 方案多样 | 迭代快，性能热点需下沉 |
 | Rust | AOT 编译，无 GC/VM runtime | Cargo + crates.io + lockfile | 低层可控 + 工程化统一 |
 
-## 4. 产物与链接认知（`exe` / `so` / `a`）
+## 4. 产物与链接认知
 
 Rust 常见产物类型：
 

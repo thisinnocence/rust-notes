@@ -105,7 +105,7 @@ Rust 没有像 Go 那样“绝对单一”的风格工具文化，但工程效�
 
 - 风格统一做得越自动化，团队越能把脑力花在真正重要的系统问题上。
 
-## 9. 参考资料（官方与一手为主）
+## 9. 参考资料
 
 - Rust Style Guide: <https://doc.rust-lang.org/style-guide/>
 - Rust Style Editions: <https://doc.rust-lang.org/stable/style-guide/editions.html>

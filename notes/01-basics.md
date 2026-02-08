@@ -6,7 +6,7 @@
 cargo run --bin 01_basics
 ```
 
-## 1. 常用关键字速览（先建立全局地图）
+## 1. 常用关键字速览
 
 按系统编程高频场景先记这些：
 
@@ -24,7 +24,7 @@ cargo run --bin 01_basics
 - `const` 是编译期常量，不是 C 的宏替换。
 - `let score = score;` 是 shadowing（新绑定），不是同一变量改类型。
 
-## 2. 控制流（Rust 的表达式风格）
+## 2. 控制流与表达式风格
 
 本章核心：Rust 的 `if` / `match` 是表达式，不只是语句。
 
@@ -53,7 +53,7 @@ let stop_at = loop {
 - `break` 可用于三类循环，不与 `loop` 绑定。
 - `break value` 主要用于 `loop` 作为表达式时返回值。
 
-## 3. 函数与类型写法（语法骨架）
+## 3. 函数与类型写法
 
 本例函数：
 
@@ -88,9 +88,9 @@ Rust 没有 class，常见建模组合是：
 - `impl TaskRunner`：`new`/`run` 方法
 - `trait Describe` + `impl Describe for TaskRunner`：接口能力实现
 
-## 5. 语法解码（高频疑问）
+## 5. 语法解码
 
-### 5.1 `#[derive(Debug)]` 是什么
+### 5.1 derive Debug 是什么
 
 - attribute（属性），作用于类型定义。
 - `derive(Debug)` 自动生成 `Debug` trait 实现。
@@ -116,7 +116,7 @@ Rust 没有 class，常见建模组合是：
 - C++ 模板：类型系统内的编译期泛型机制。
 - Rust 宏：基于 token/语法规则展开，不是纯文本替换。
 
-### 5.5 `=>` 是什么（对照 TS）
+### 5.5 => 是什么 对照 TS
 
 - 在 Rust 中，`=>` 主要用于 `match` 分支和 `macro_rules!` 规则。
 - 不是 TS 那种箭头函数定义语法。
@@ -140,7 +140,7 @@ Rust 没有 class，常见建模组合是：
 - 宏：`println!`、`matches!`、`sum_i32!`
 - 引用：`&T`、`*r`、`{:p}` 地址打印
 
-## 7. 关键提醒（本章最重要）
+## 7. 关键提醒
 
 - 先记“关键词 + 大概作用”，再追求精确语义。
 - 控制流要优先建立“表达式化”思维（`if/match` 产值）。
