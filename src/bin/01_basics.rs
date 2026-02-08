@@ -181,6 +181,8 @@ fn main() {
     };
     println!("loop stop_at={stop_at}");
 
+    // `'outer` 是循环标签（loop label），不是生命周期参数。
+    // 作用：在内层循环中可用 `break 'outer` / `continue 'outer` 精确控制外层循环。
     'outer: for x in 0..3 {
         for y in 0..3 {
             if x == 1 && y == 1 {
