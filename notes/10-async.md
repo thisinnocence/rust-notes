@@ -2,7 +2,7 @@
 
 本章回答一个核心问题：
 
-- Rust 协程模型更像 Go、JS，还是 C++？
+- Rust 的异步模型更像 Go、JS，还是 C++？
 - IO 密集型场景下，Rust 的最佳策略是什么？
 
 ## 1. 核心结论
@@ -13,9 +13,9 @@
 
 结论：
 
-- Rust 有协程能力，但执行模型是“可选择的 runtime 方案”，不是语言强绑单一运行时。
+- Rust 采用 `async/await` + `Future` 的异步模型，运行时由生态库提供，不是语言内建统一运行时。
 
-## 2. Rust 协程到底是什么
+## 2. Rust 异步模型到底是什么
 
 - `async fn` 会被编译成一个 `Future` 状态机。
 - `await` 是状态机挂起点（yield point）。
@@ -37,9 +37,9 @@
 
 ## 4. 对比 Go / JS / C++
 
-| 语言 | 协程/异步模型 | 调度模型 | IO 密集体验 |
+| 语言 | 异步模型 | 调度模型 | IO 密集体验 |
 | --- | --- | --- | --- |
-| Go | goroutine（语言级） | runtime 内置 M:N 调度 + netpoll | 开箱即用，非常顺手 |
+| Go | goroutine（语言级协程） | runtime 内置 M:N 调度 + netpoll | 开箱即用，非常顺手 |
 | JS/Node.js | Promise + event loop | 通常单线程主循环 + 事件队列 | IO 并发强，但 CPU 重任务需额外手段 |
 | C++20 | coroutine（语言机制） | 无统一官方 runtime，生态分散 | 能做但工程统一性较弱 |
 | Rust | `async/await` + `Future` | runtime 由库提供（tokio 等） | 工程化成熟，控制力与性能平衡较好 |
@@ -91,4 +91,4 @@
 
 结论：
 
-- Rust 协程在 IO 密集场景非常有竞争力，但关键不是“写成 async”，而是“写成可调度、可隔离、可观测的 async”。
+- Rust 在 IO 密集场景的异步编程设施非常有竞争力，关键不是“写成 async”，而是“写成可调度、可隔离、可观测的异步系统”。
