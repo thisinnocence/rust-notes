@@ -11,5 +11,6 @@ set -euo pipefail
 # - 每次按包名解析并执行 CLI，适合仓库内统一检查（lint）
 # - 首次运行通常会先出现 resolved/downloaded/added 等下载日志
 # - 依赖准备完成后会立即执行 lint；若无违规，CLI 默认静默成功
-# - 检查目标为 notes 目录下全部 Markdown 文件
-pnpm dlx markdownlint-cli notes/*.md
+# - 这里显式忽略 MD013（line-length），因为当前仓库 README 使用了较长表格行
+# - 检查目标包含 notes 目录与仓库顶层 README
+pnpm dlx markdownlint-cli --disable MD013 -- README.md notes/*.md
