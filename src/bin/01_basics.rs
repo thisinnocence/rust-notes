@@ -1,3 +1,5 @@
+use std::fmt;
+
 const MAX_RETRY: u32 = 3;
 
 // #[derive(Debug)] 会自动为类型生成 Debug trait 实现，
@@ -6,6 +8,15 @@ const MAX_RETRY: u32 = 3;
 enum Mode {
     Fast,
     Safe,
+}
+
+impl fmt::Display for Mode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Mode::Fast => write!(f, "fast"),
+            Mode::Safe => write!(f, "safe"),
+        }
+    }
 }
 
 struct TaskRunner {
@@ -135,6 +146,7 @@ fn main() {
     // "接口" 对应：trait
     println!("describe={}", runner.describe());
     println!("runner mode debug={:?}", runner.mode);
+    println!("runner mode display={}", runner.mode);
 
     // 引用与地址：&T 是借用（reference），不是 C 的裸指针。
     // 借用本身会指向某个地址，可用 {:p} 打印。

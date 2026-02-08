@@ -97,6 +97,19 @@ Rust 没有 class，常用组合是：
 
 - 有点像给类型自动生成一个“调试打印能力”，避免手写格式化函数。
 
+和 `printf` / `{fmt}` 的对应关系（重点）：
+
+- `println!` 里的格式位不是“随便填”的，和类型实现的 trait 绑定。
+- `{:?}` 需要类型实现 `Debug` trait；`#[derive(Debug)]` 就是在自动补这个实现。
+- `{}` 需要类型实现 `Display` trait；通常要你手写 `impl Display for Type`。
+- C 的 `printf("%d", x)` 主要靠格式符和参数类型约定；Rust 是编译期 trait 检查，不匹配直接编译报错。
+- 你可以把它理解为：Rust 把“能不能这样打印”变成了类型系统规则，不是运行时碰运气。
+
+本例里可直接对照看：
+
+- `println!("runner mode debug={:?}", runner.mode);` 使用 `Debug`。
+- `println!("runner mode display={}", runner.mode);` 使用 `Display`（由我们手写实现）。
+
 ### `name: String` 为什么类型在后面
 
 - Rust 的变量/字段声明统一是 `name: Type`。
