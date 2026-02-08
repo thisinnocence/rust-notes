@@ -1,4 +1,4 @@
-# 19 - Async 进阶：Pin / 取消 / 背压
+# 11 - Async 进阶：Pin / 取消 / 背压
 
 本章目标：从“会写 async”到“能稳定运行 async 系统”。
 
@@ -49,7 +49,7 @@
 
 - async 进阶的核心不是语法，而是“生命周期管理 + 流量控制 + 可观测性”。
 
-## 6. 配套代码怎么读（`src/bin/19_async_advanced.rs`）
+## 6. 配套代码怎么读（`src/bin/11_async_advanced.rs`）
 
 - 上半段：`sync_channel` 展示背压与取消信号协作。
 - 下半段：手写 `Future`（`DelayTicks`）+ `block_on`，演示 `Pin`/轮询/取消状态。
@@ -69,7 +69,7 @@
 - 背压控制“生产速度不超过消费能力”（有界队列）。
 - 两者配合才能避免高峰期内存和尾延迟失控。
 
-## 9. 配套代码怎么读（`src/bin/19_async_advanced.rs`）
+## 9. 配套代码怎么读（`src/bin/11_async_advanced.rs`）
 
 - 有界 `sync_channel`：背压基线。
 - `cancelled` 原子标志：取消与 shutdown 信号。
