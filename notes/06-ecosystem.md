@@ -95,3 +95,77 @@ Rust 的关键在于“语言语义 + 包管理 + 构建”是一套统一体验
 一句话总结：
 
 - 现代语言的竞争，不只在语法和性能，也在“生态基础设施能否支持 5-10 年演进”。
+
+## 8. 业界接纳现状：你点名领域的“真实温度”
+
+下面按你关注的方向给一个更工程化的现状判断（截至 2026 年初）。
+
+### 8.1 CLI 工具领域：接纳度高，已经是主流选项之一
+
+- 现象：大量高频 CLI（检索、格式化、压缩、构建工具）都有 Rust 实现并被广泛采用。
+- 原因：单文件分发、性能好、内存安全收益直接、跨平台发布流程稳定。
+- 结论：CLI 是 Rust 最成熟的落地场景之一。
+
+### 8.2 Bare-metal / Embedded：可落地，但分芯片生态成熟度不均
+
+- 现象：`embedded-hal` 1.0、`cortex-m-rt`、`embassy`、`probe-rs` 已形成可用基座。
+- 原因：`no_std` + 零成本抽象 + 可控 ABI，适合资源受限和高可靠场景。
+- 现实：不同芯片厂 HAL 成熟度差异大，量产链路常仍需 C/Rust 混合。
+
+### 8.3 Infra（Linux / 虚拟化 / QEMU 周边）
+
+- Linux 内核：
+- 官方文档明确 Rust 已在主线（v6.1 起）并持续推进，但当前仍属实验/开发中，尚无面向终端用户的 in-tree 生产级 Rust 驱动作为默认路径。
+- QEMU：
+- 官方文档已经有 Rust 开发章节与样例设备，构建系统也引入 Rust 依赖管理，但整体仍是“渐进引入”而非“全面 Rust 化”。
+- 虚拟化周边：
+- 在 VMM/云基础设施方向，Rust 采用度较高（例如 rust-vmm 生态、Firecracker、Cloud Hypervisor 一类项目路径）。
+
+### 8.4 Python / JS 基建：Rust 作为性能内核正在常态化
+
+- Python：
+- `uv` 直接定位为“用 Rust 写的 Python 包/项目管理器”。
+- Pydantic v2 的 `pydantic-core` 使用 Rust（`pyo3`）重写，官方给出性能与可维护性动机。
+- JS/TS：
+- SWC、Turbopack 这类核心工具明确以 Rust 为实现基础，目标是提升大型工程下的构建吞吐和增量性能。
+- 结论：上层语言不变，性能热点下沉到 Rust，已经成为主流工程模式。
+
+### 8.5 Ubuntu 的 sudo-rs / uutils 迁移：从“实验”走向“默认”尝试
+
+- Ubuntu 社区公告明确提出“Carefully But Purposefully Oxidising Ubuntu”路线。
+- 官方讨论帖给出 Ubuntu 25.10 采用 `sudo-rs` 默认实现的计划并推进落地。
+- 同时也出现过安全漏洞与兼容性问题并快速修复，这说明迁移是“真实生产试验”，不是 PPT。
+
+## 9. 为什么很多场景会选 Rust，而不是 Go 或 C++ 重写
+
+这是工程约束驱动，不是语言宗教。
+
+### 9.1 相比 Go：低层可控性与 runtime 约束
+
+- Go 在服务端效率很高，但其 GC + runtime 模型在内核/裸机/强实时/极限内存场景不总是合适。
+- Rust 的 `no_std` 路线和无强制 GC runtime 更贴近系统级可控需求。
+- 在“需要 C ABI 渐进迁移”的老系统里，Rust 通常更容易嵌入。
+
+### 9.2 相比 C++ 重写：安全收益与复杂度重分配
+
+- C++ 当然能写出高性能系统，但大规模历史代码的内存安全治理成本很高。
+- “直接 C++ 重写”常把复杂度转移而非消除：ABI、继承层次、模板复杂度、历史包袱仍在。
+- Rust 的价值是把一部分安全与并发约束前移到编译期，降低长期返工和事故成本。
+
+### 9.3 为什么不是“一刀切替代”
+
+- 现实最常见的是混合架构：C/C++/Go 保留既有稳定部分，Rust 承担高风险或高收益模块。
+- 包管理与构建生态成熟（Cargo + crates.io + lockfile）是这条渐进路线能持续的关键。
+
+## 10. 参考线索（用于继续追踪业界讨论）
+
+- Ubuntu 氧化计划讨论：<https://discourse.ubuntu.com/t/carefully-but-purposefully-oxidising-ubuntu/56995>
+- Ubuntu 25.10 默认 sudo-rs 讨论：<https://discourse.ubuntu.com/t/adopting-sudo-rs-by-default-in-ubuntu-25-10/60583>
+- Ubuntu 安全公告（sudo-rs）：<https://ubuntu.com/security/notices/USN-7867-1>
+- Linux kernel Rust 文档：<https://docs.kernel.org/rust/index.html>
+- QEMU Rust 开发文档：<https://www.qemu.org/docs/master/devel/rust.html>
+- QEMU 构建平台与 Rust 依赖：<https://www.qemu.org/docs/master/about/build-platforms.html>
+- uv 项目：<https://github.com/astral-sh/uv>
+- Pydantic v2（pydantic-core in Rust）：<https://pydantic.dev/articles/pydantic-v2>
+- SWC：<https://swc.rs/>
+- Next.js Turbopack 文档：<https://nextjs.org/docs/pages/api-reference/turbopack>
