@@ -27,6 +27,17 @@ impl fmt::Display for Mode {
     // 这是在“为 Mode 实现 Display trait 要求的方法”。
     // 它看起来像普通函数，但语义上是 trait 的接口实现，不是随便起名的函数。
     // Display trait 规定：必须提供这个签名的 fmt 方法。
+    // 人肉拆签名：
+    // - `fn fmt(...) -> fmt::Result`
+    //   `fmt` 是方法名，返回 `fmt::Result`（可理解为 `Result<(), fmt::Error>`）。
+    // - `&self`
+    //   当前对象的只读借用（这里是 `Mode`）。
+    // - `f: &mut fmt::Formatter<'_>`
+    //   `f` 是“格式化写入上下文”。
+    //   `fmt::Formatter`：`std::fmt` 模块里的 `Formatter` 类型（`::` 是路径分隔符）。
+    //   `<'_>`：给 `Formatter` 的生命周期参数，`'_` 表示“让编译器自动推断这个生命周期”。
+    //   注意：这里的 `'_` 不是 Python 式“变量名下划线占位符”，而是“匿名生命周期参数”。
+    //   `&mut`：可变借用，因为 `write!` 需要往 `f` 里持续写入内容。
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         // self: &self
         // - 当前要被格式化输出的对象（这里就是 Mode::Fast / Mode::Safe）
