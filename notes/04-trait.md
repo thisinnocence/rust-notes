@@ -59,7 +59,7 @@ cargo run --bin 04_trait
 - 对比 `&impl Trait`（静态分发）和 `&dyn Trait`（动态分发）。
 - 补一节对象安全（object safety）和性能模型。
 
-## 6.1 Trait 深水区（建议尽早建立心智）
+## 6.1 Trait 进阶
 
 ### 对象安全（Object Safety）
 
