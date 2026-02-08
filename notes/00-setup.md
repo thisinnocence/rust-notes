@@ -7,7 +7,7 @@
 - `src/` 放可运行 Rust 代码（小颗粒示例）。
 - `notes/` 放与 C/C++ 背景对照的学习笔记。
 
-第一步先保持最小可运行：
+先确保最小可运行：
 
 - `cargo run`
 - `cargo check`
@@ -25,6 +25,6 @@ Markdown 规范检查：
 
 - `./scripts/lint-md.sh`
 
-一句话总结：
+小结：
 
-- 先用 `run-all` 跑通全量示例，再按章节逐个深入学习对应 `notes` 与 `src/bin`。
+- 可先用 `run-all` 跑通全量示例，再按章节逐个深入学习对应 `notes` 与 `src/bin`。

@@ -5,13 +5,13 @@
 - Rust 协程模型更像 Go、JS，还是 C++？
 - IO 密集型场景下，Rust 的最佳策略是什么？
 
-## 1. 先给结论
+## 1. 核心结论
 
 - Rust 的 `async/await` 不是 Go 的“语言内置协程 + 调度器”。
 - Rust 也不是 JS 那种“默认单线程事件循环 + Promise 微任务”模型。
 - Rust 更像“语言支持 async 状态机 + 运行时由库提供（如 tokio）”。
 
-一句话：
+结论：
 
 - Rust 有协程能力，但执行模型是“可选择的 runtime 方案”，不是语言强绑单一运行时。
 
@@ -32,7 +32,7 @@
 | --- | --- | --- |
 | 高并发网络服务 | `tokio` + async socket/IO | 适合连接数高、单请求 CPU 占比低 |
 | 混合任务（IO + 少量 CPU） | async 主流程 + `spawn_blocking` 隔离阻塞 | 避免阻塞 reactor/worker |
-| 重 CPU 计算 | 独立线程池（如 rayon）或专门 worker | 不要把 CPU 热点硬塞进 async task |
+| 重 CPU 计算 | 独立线程池（如 rayon）或专门 worker | 不宜把 CPU 热点直接放入 async task |
 | 低延迟系统组件 | 控制任务粒度与分配次数 | 减少上下文切换与内存抖动 |
 
 ## 4. 对比 Go / JS / C++
@@ -89,6 +89,6 @@
 - 第三阶段：明确标注阻塞段，统一走 `spawn_blocking` 或专门线程池。
 - 第四阶段：用指标驱动优化（P99 延迟、吞吐、上下文切换、分配次数）。
 
-一句话：
+结论：
 
 - Rust 协程在 IO 密集场景非常有竞争力，但关键不是“写成 async”，而是“写成可调度、可隔离、可观测的 async”。

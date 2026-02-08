@@ -50,7 +50,7 @@ cargo run --bin 04_trait
 
 ## 5. 重点关注的迁移点
 
-- 不要先找“class 继承”对应物，先用 `struct + trait` 建模。
+- 不建议先寻找“class 继承”对应物，建议先用 `struct + trait` 建模。
 - trait 在 Rust 里既是“接口”，也是泛型约束（这点比 Go/Java 更统一）。
 - `enum + match` 是状态建模主力，能替代很多 if/else + magic number。
 
@@ -89,9 +89,9 @@ cargo run --bin 04_trait
 | `impl Trait` | 静态分发 | 单态化，通常更利于内联优化 | 热路径、性能敏感 |
 | `dyn Trait` | 动态分发 | vtable 间接调用 | 插件化、运行时多态 |
 
-### 给系统程序员的建议
+### 工程实践建议
 
-- 默认先用 `impl Trait`（性能和简单性更稳）。
+- 默认采用 `impl Trait`（性能与实现复杂度更平衡）。
 - 确认需要运行时可替换能力时再引入 `dyn Trait`。
 
 ## 7. 对比 C/C++ class 继承：为什么现代语言更偏这个方向
@@ -183,5 +183,5 @@ Rust 倾向把“数据”和“行为能力”分开建模：
 
 经验：
 
-- 已知有限类型集合，优先 `enum + match`。
-- 需要运行时扩展，优先 `dyn Trait`。
+- 已知有限类型集合时，通常采用 `enum + match`。
+- 需要运行时扩展时，通常采用 `dyn Trait`。
