@@ -207,3 +207,70 @@ Rust 默认并不把所有函数都当作 C 可见符号导出。
 - 先做一个 `no_std + no_main` 最小可启动样例（串口打印/死循环）。
 - 再引入中断和 MMIO 封装，最后才引入堆分配。
 - 保持“C 汇编启动层 + Rust 业务层”分层，这样迁移阻力最小。
+
+## 11. 业界进展与常用库：Bare-Metal 现在到哪一步了
+
+你的判断“Rust 在 bare-metal 已经大展宏图”可以成立，但更精确地说是：
+
+- 在工具链、基础抽象、调试工具、部分垂直行业已进入可落地阶段。
+- 在“全行业替代 C”层面仍是渐进迁移，常见形态是 Rust/C 混合栈。
+
+### 11.1 可以认为比较成熟的基座
+
+- 官方嵌入式社区与文档体系：Rust Embedded Working Group、Embedded Rust Book。
+- 生态稳定基石：`embedded-hal` 1.0（驱动可移植 trait 标准）。
+- Cortex-M 启动运行时：`cortex-m-rt`（最小启动/runtime）。
+- 调试与烧录工具：`probe-rs`（CLI、DAP、VSCode、GDB 流程）。
+
+### 11.2 工程上高频使用的库（按层分）
+
+- 启动与目标层：
+- `cortex-m-rt`、`riscv-rt`、芯片厂 HAL（例如 `esp-hal`）。
+- 硬件抽象层：
+- `embedded-hal`、`embedded-hal-async`、`embedded-hal-bus`。
+- 并发与任务模型：
+- `embassy`（async embedded 框架）、`rtic`（中断驱动并发框架）。
+- 调试与日志：
+- `probe-rs`、`defmt`（紧凑日志编码，常见于资源受限场景）。
+- 无堆数据结构：
+- `heapless`（定长容器，避免运行时堆依赖）。
+
+### 11.3 业界落地信号（你关心“经验”）
+
+- 功能安全方向：
+- Ferrocene 提供面向安全关键场景的 Rust 工具链与合规资料（汽车/工业/医疗）。
+- 嵌入式 OS 方向：
+- Tock OS（Rust 编写的嵌入式操作系统）长期持续演进。
+- 产业 MCU 生态：
+- Espressif 官方持续推进 `esp-rs`，覆盖 `no_std` 与 `std` 两条开发路线。
+- 深嵌入实践：
+- Oxide 的 Hubris 展示了 Rust 在高可靠 MCU 系统中的任务隔离与故障恢复模型。
+
+### 11.4 仍需谨慎的现实边界
+
+- 芯片厂支持度不均：有的厂商 Rust HAL 完整，有的仍以社区维护为主。
+- 周边工具链成熟度差异：量产链路（认证、诊断、产测）常需与现有 C 体系深度集成。
+- 人才与代码审查模型：团队需要同时掌握 Rust unsafe 边界与传统底层调试方法。
+
+### 11.5 给系统程序员的实操建议
+
+- 优先从“增量替换”开始：
+- 保留 C/汇编启动和 BSP，把新驱动/协议栈用 Rust 写。
+- 优先选择“生态强势芯片”做首批项目（如 Cortex-M 主流板卡、ESP32-C3/C6）。
+- 在项目早期就固定工具链版本（Rust toolchain + probe + linker）并冻结构建镜像。
+- 先建立一套可重复的烧录/调试/回归流程，再扩大 Rust 代码占比。
+
+## 12. 参考链接（便于你继续深挖）
+
+- Embedded Working Group: [rust-embedded.org](https://rust-embedded.org/)
+- Embedded Rust Book: [docs.rust-embedded.org/book](https://docs.rust-embedded.org/book/)
+- `embedded-hal` v1.0 发布说明: [blog.rust-embedded.org/embedded-hal-v1](https://blog.rust-embedded.org/embedded-hal-v1/)
+- `cortex-m-rt` docs: [docs.rs/cortex-m-rt](https://docs.rs/crate/cortex-m-rt/latest)
+- Embassy: [github.com/embassy-rs/embassy](https://github.com/embassy-rs/embassy)
+- RTIC: [docs.rs/rtic](https://docs.rs/rtic/latest/rtic/)
+- probe-rs: [probe.rs/docs](https://probe.rs/docs/)
+- Tock OS: [tockos.org](https://tockos.org/)
+- Hubris: [hubris.oxide.computer](https://hubris.oxide.computer/)
+- Espressif Rust docs: [docs.espressif.com/projects/rust](https://docs.espressif.com/projects/rust/)
+- Ferrocene: [ferrocene.dev/en](https://ferrocene.dev/en)
+- Linux kernel Rust docs: [docs.kernel.org/rust/index.html](https://docs.kernel.org/rust/index.html)
