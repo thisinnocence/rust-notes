@@ -141,6 +141,33 @@ Rust 的关键在于“语言语义 + 包管理 + 构建”是一套统一体验
 - 官方讨论帖给出 Ubuntu 25.10 采用 `sudo-rs` 默认实现的计划并推进落地。
 - 同时也出现过安全漏洞与兼容性问题并快速修复，这说明迁移是“真实生产试验”，不是 PPT。
 
+### 8.6 深入看 Ubuntu 为什么大力推进（以及对 C 维护的优势）
+
+从官方公开材料看，Ubuntu 的推进逻辑是“安全关键工具先行 + 可回退 + 先在 interim 版验证”：
+
+- 目标不是盲目“全盘 Rust 化”，而是优先替换特权边界工具（`sudo`、coreutils）。
+- 25.10 先落地，26.04 LTS 再依据反馈与兼容性结果决定策略。
+- Canonical 明确为上游补缺口提供赞助（如 uutils 的 SELinux、i18n），不是只“下游打包”。
+
+结合公开信息可见的工程优势：
+
+- 安全面：把特权边界工具迁移到内存安全实现，减少一类内存错误攻击面。
+- 维护面：语言安全约束 + 上游协作投资，降低长期“高危组件维护债务”。
+- 迁移面：保留传统实现并可切换（`update-alternatives`），把迁移风险控制在可回退范围。
+- 运维面：官方文档明确差异列表和已知不兼容点，避免“黑盒替换”。
+
+为什么不是直接选 Go 或继续 C/C++ 重写（基于官方信息的推断）：
+
+- 推断 1：`sudo` 这类特权边界工具更需要低层可控 + C ABI 兼容 + 内存安全的组合，Rust 在这三点上平衡更好。
+- 推断 2：Go 在这类场景的 runtime/部署模型并非首选（尤其是系统基础工具替换路径）。
+- 推断 3：继续 C/C++ 能保留性能，但很难在语言层面直接获得 Rust 同级别的默认内存安全约束。
+
+现实边界同样要承认：
+
+- `sudo-rs` 并非 100% 与 `sudo.ws` 完全一致，Ubuntu 官方文档持续维护差异清单。
+- Rust 实现也会有漏洞（如 USN-7867-1），但关键在于：迁移后可在“更强静态约束 + 明确上游协作”框架下持续迭代。
+- 传统 `sudo` 也持续有安全公告（例如 USN-7604-1），说明这条迁移并不是“旧方案永远无风险、新方案才有风险”。
+
 ## 9. 为什么很多场景会选 Rust，而不是 Go 或 C++ 重写
 
 这是工程约束驱动，不是语言宗教。
@@ -166,7 +193,11 @@ Rust 的关键在于“语言语义 + 包管理 + 构建”是一套统一体验
 
 - Ubuntu 氧化计划讨论：<https://discourse.ubuntu.com/t/carefully-but-purposefully-oxidising-ubuntu/56995>
 - Ubuntu 25.10 默认 sudo-rs 讨论：<https://discourse.ubuntu.com/t/adopting-sudo-rs-by-default-in-ubuntu-25-10/60583>
+- Ubuntu 25.10 发布说明（含 sudo-rs 默认与仍可用 sudo.ws）：<https://canonical.com/blog/canonical-releases-ubuntu-25-10-questing-quokka>
+- Ubuntu Server 文档（25.10 起 sudo-rs 默认、保留 sudo.ws）：<https://documentation.ubuntu.com/server/how-to/security/user-management/>
+- Ubuntu Server 文档（sudo-rs 与 sudo.ws 差异清单）：<https://documentation.ubuntu.com/server/reference/other-tools/sudo-rs/>
 - Ubuntu 安全公告（sudo-rs）：<https://ubuntu.com/security/notices/USN-7867-1>
+- Ubuntu 安全公告（sudo.ws，CVE-2025-32462/32463）：<https://ubuntu.com/security/notices/USN-7604-1>
 - Linux kernel Rust 文档：<https://docs.kernel.org/rust/index.html>
 - QEMU Rust 开发文档：<https://www.qemu.org/docs/master/devel/rust.html>
 - QEMU 构建平台与 Rust 依赖：<https://www.qemu.org/docs/master/about/build-platforms.html>
