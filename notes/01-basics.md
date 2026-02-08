@@ -65,7 +65,8 @@ cargo run --bin 01_basics
 | `isize`/`usize` | 与指针位宽一致的整数 | `intptr_t`/`uintptr_t` |
 | `f32`/`f64` | 浮点数 | `float`/`double` |
 | `()` | 单元类型（无有效值） | 近似于 `void` 语义位 |
-| `&T` / `&mut T` | 借用引用（只读 / 可变） | 语义近似 `const T&` / `T&`（但受借用规则约束） |
+| `&T` | 只读借用引用 | 语义近似 `const T&`（但受借用规则约束） |
+| `&mut T` | 可变借用引用（独占） | 语义近似 `T&`（但受借用规则约束） |
 | `&str` | 借用字符串切片（UTF-8） | 近似 `const char* + len` 语义 |
 | `String` | 拥有所有权的可增长字符串 | 近似 `std::string` |
 | `[T; N]` | 固定长度数组 | `T[N]` / `std::array<T, N>` |
@@ -79,6 +80,7 @@ cargo run --bin 01_basics
 - `str` 本体是 DST（动态大小类型），实际使用通常是 `&str`。
 - 表格里的 `&str` 只是“`&` 借用语法”的一个具体例子，不是 `&` 只给字符串用。
 - 同类写法还有 `&i32`、`&TaskRunner`、`&[u8]`、`&mut T`。
+- Rust 没有独立的 `T&&` 语法；所有权转移通常由 move 语义表达。
 
 指针与成员访问对照：
 
