@@ -31,7 +31,7 @@
 | 02 | 所有权与借用 | [`notes/02-ownership.md`](notes/02-ownership.md) | [`src/bin/02_ownership.rs`](src/bin/02_ownership.rs) |
 | 03 | Result 与错误处理入门 | [`notes/03-result.md`](notes/03-result.md) | [`src/bin/03_result.rs`](src/bin/03_result.rs) |
 | 04 | Struct/Enum/Trait | [`notes/04-trait.md`](notes/04-trait.md) | [`src/bin/04_trait.rs`](src/bin/04_trait.rs) |
-| 05 | Build + Ecosystem | [`notes/05-build.md`](notes/05-build.md) | [`src/bin/05_build.rs`](src/bin/05_build.rs) |
+| 05 | 构建与生态 | [`notes/05-build.md`](notes/05-build.md) | [`src/bin/05_build.rs`](src/bin/05_build.rs) |
 | 06 | Style | [`notes/06-style.md`](notes/06-style.md) | [`src/bin/06_style.rs`](src/bin/06_style.rs) |
 | 07 | 模块系统 | [`notes/07-module.md`](notes/07-module.md) | [`src/bin/07_module.rs`](src/bin/07_module.rs) |
 | 08 | 内存模型与布局 | [`notes/08-memory.md`](notes/08-memory.md) | [`src/bin/08_memory.rs`](src/bin/08_memory.rs) |
