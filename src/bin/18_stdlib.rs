@@ -19,10 +19,14 @@ fn string_demo() {
 }
 
 fn sort_demo() {
+    // `Vec<T>` 是标准库容器类型，`vec![]` 是创建 `Vec` 的宏（不是函数）。
+    // 这里会推断为 `Vec<i32>`。
     let mut nums = vec![5, 2, 9, 1, 5, 6];
+    // `sort()` 是原地排序（in-place），会直接重排 `nums` 内部元素。
     nums.sort();
     println!("sort={:?}", nums);
 
+    // 这里会推断为 `Vec<(&str, i32)>`，即“元素是二元组”的向量。
     let mut pairs = vec![("alice", 3), ("bob", 1), ("carol", 2)];
     pairs.sort_by_key(|x| x.1);
     println!("sort_by_key={:?}", pairs);
