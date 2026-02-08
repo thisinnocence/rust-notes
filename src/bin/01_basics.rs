@@ -109,6 +109,9 @@ fn classify(score: i32) -> &'static str {
 
 // `Option<T>` 是标准库核心类型（完整路径 `std::option::Option`，底层在 `core`）。
 // 它在 prelude 里自动导入，所以这里可直接写 `Option<u64>`。
+// `Some` / `None` 是 `Option` 的两个枚举变体：
+// - `Some(v)` 表示“有值”
+// - `None` 表示“无值”
 fn maybe_timeout(mode: &Mode) -> Option<u64> {
     if matches!(mode, Mode::Fast) {
         Some(200)
