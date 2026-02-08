@@ -1,5 +1,7 @@
 const MAX_RETRY: u32 = 3;
 
+// #[derive(Debug)] 会自动为类型生成 Debug trait 实现，
+// 这样就可以用 {:?} 打印调试信息。
 #[derive(Debug)]
 enum Mode {
     Fast,
@@ -7,6 +9,7 @@ enum Mode {
 }
 
 struct TaskRunner {
+    // 字段语法是 `字段名: 类型`，和 C/C++ 的 `类型 变量名` 顺序不同。
     name: String,
     mode: Mode,
 }
@@ -55,6 +58,10 @@ fn maybe_timeout(mode: &Mode) -> Option<u64> {
     }
 }
 
+fn inspect_ref(v: &i32) {
+    println!("inspect_ref value={v}, addr={:p}", v);
+}
+
 fn main() {
     // 关键字与变量：let / mut / const / shadowing
     let language = "rust";
@@ -95,6 +102,15 @@ fn main() {
 
     // "接口" 对应：trait
     println!("describe={}", runner.describe());
+    println!("runner mode debug={:?}", runner.mode);
+
+    // 引用与地址：&T 是借用（reference），不是 C 的裸指针。
+    // 借用本身会指向某个地址，可用 {:p} 打印。
+    let num = 42;
+    let r = &num;
+    println!("num={num}, r_addr={:p}", r);
+    inspect_ref(r);
+    println!("deref *r={}", *r);
 
     // 常见基础类型：Option
     match maybe_timeout(&runner.mode) {
