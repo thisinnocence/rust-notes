@@ -80,7 +80,9 @@ Rust 常见省略规则（高频）：
 | 需要跨作用域长期持有 | 返回拥有值（`String`/`Vec<T>`） |
 | 生命周期标注让接口明显复杂 | 优先改为拥有值，先保可维护性 |
 
-## 11. 配套代码怎么读（`src/bin/14_lifetime.rs`）
+## 11. 配套代码
+
+对应示例：[`../src/bin/14_lifetime.rs`](../src/bin/14_lifetime.rs)。
 
 - `pick_first`：显式生命周期关联输入与输出。
 - `pick_first_elided`：演示省略规则与等价写法。

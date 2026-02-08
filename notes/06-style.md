@@ -120,7 +120,9 @@ Rust 没有像 Go 那样“绝对单一”的风格工具文化，但工程效�
 - Prettier Option Philosophy: <https://prettier.io/docs/next/option-philosophy>
 - Black（The uncompromising formatter）: <https://github.com/psf/black>
 
-## 10. 配套代码怎么读（`src/bin/06_style.rs`）
+## 10. 配套代码
+
+对应示例：[`../src/bin/06_style.rs`](../src/bin/06_style.rs)。
 
 - 这个文件只做一件事：把“命名/缩进/格式”放进可运行代码里直观看。
 - 覆盖点：

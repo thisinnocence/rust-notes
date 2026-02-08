@@ -143,7 +143,9 @@ Rust 对 AI 协作开发的价值在于：
 
 不是“AI 自动写完”，而是“AI 产出更容易被工具链收敛到可交付代码”。
 
-## 13. 配套代码怎么读（`src/bin/05_build.rs`）
+## 13. 配套代码
+
+对应示例：[`../src/bin/05_build.rs`](../src/bin/05_build.rs)。
 
 - 用最小运行代码把构建信息可视化：
   - `cfg!(target_os/target_arch)`：目标平台分支。

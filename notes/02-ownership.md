@@ -178,7 +178,9 @@ Rust 没有 `new`/`delete` 关键字，但有明确的类型和库入口：
 - 生命周期相关错误：
   - 解决：先简化函数签名，再明确返回借用来源。
 
-## 9. 配套代码怎么读（`src/bin/02_ownership.rs`）
+## 9. 配套代码
+
+对应示例：[`../src/bin/02_ownership.rs`](../src/bin/02_ownership.rs)。
 
 - `takes_ownership`：演示 move。
 - `borrow_read`：演示不可变借用。

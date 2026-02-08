@@ -127,7 +127,9 @@ Rust 没有 class，常见建模组合是：
 - 阅读时先看语义名，再看具体类型。
 - 与类型推断结合后更统一。
 
-## 6. 示例覆盖总览（按 `src/bin/01_basics.rs`）
+## 6. 示例覆盖总览
+
+对应示例：[`../src/bin/01_basics.rs`](../src/bin/01_basics.rs)。
 
 - 变量绑定：不可变、可变、shadowing
 - 常量：`const MAX_RETRY`

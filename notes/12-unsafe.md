@@ -96,7 +96,9 @@ Rust 里这些典型动作需要 `unsafe`：
 - unsafe 的质量，决定了系统 Rust 项目的上限。
 - 目标不是“零 unsafe”，目标是“可审计、可证明、可维护的 unsafe”。
 
-## 10. 配套代码怎么读（`src/bin/12_unsafe_boundary.rs`）
+## 10. 配套代码
+
+对应示例：[`../src/bin/12_unsafe_boundary.rs`](../src/bin/12_unsafe_boundary.rs)。
 
 - 文件顶部给了 `SAFETY TEMPLATE`，可作为后续 unsafe 注释模板。
 - `read_u32_unaligned` 展示 `unsafe fn` + 最小危险操作封装。
