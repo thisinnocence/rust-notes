@@ -12,6 +12,18 @@ cargo run --bin 04_trait
 - `enum`：承载离散状态，并要求匹配分支穷尽。
 - `trait`：定义行为契约，类型通过 `impl` 实现该行为。
 
+### 1.1 trait 的概念、起源与常见使用领域
+
+- 概念：trait 本质是“能力接口（behavior contract）”，关注类型“能做什么”，而非“继承自谁”。
+- 起源脉络：来自函数式语言里的 type class 思想（如 Haskell），后来被 Rust 吸收并与系统编程需求结合。
+- 常见语言对应：
+  - Rust `trait` 接近 Go `interface` 的“按行为抽象”思路。
+  - 在 Java/C# 语境里可类比 `interface`，但 Rust trait 同时承担泛型约束角色。
+- 常见领域：
+  - 标准库抽象（`Iterator`、`Read`/`Write`、`Display`/`Debug`）。
+  - 基础设施与中间件（驱动接口、插件系统、协议适配层）。
+  - 泛型算法库（通过 trait 约束复用算法而不依赖继承树）。
+
 ## 2. 结合当前示例看
 
 - `Config` 是 `struct`，保存线程数和后端类型。
