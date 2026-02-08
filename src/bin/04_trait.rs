@@ -22,8 +22,26 @@ impl Describe for Config {
     }
 }
 
-fn print_desc(item: &impl Describe) {
-    println!("{}", item.describe());
+// 关联类型示例：实现者决定输出类型
+trait ValueType {
+    type Output;
+    fn value(&self) -> Self::Output;
+}
+
+impl ValueType for Config {
+    type Output = usize;
+
+    fn value(&self) -> Self::Output {
+        self.worker_threads
+    }
+}
+
+fn print_desc_static(item: &impl Describe) {
+    println!("static dispatch: {}", item.describe());
+}
+
+fn print_desc_dynamic(item: &dyn Describe) {
+    println!("dynamic dispatch: {}", item.describe());
 }
 
 fn main() {
@@ -37,6 +55,10 @@ fn main() {
         backend: Backend::IoUring,
     };
 
-    print_desc(&c1);
-    print_desc(&c2);
+    // impl Trait: 静态分发
+    print_desc_static(&c1);
+    // dyn Trait: 动态分发
+    print_desc_dynamic(&c2);
+
+    println!("associated type value={}", c1.value());
 }
