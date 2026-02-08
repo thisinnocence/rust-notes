@@ -12,6 +12,15 @@
 - `cargo run`
 - `cargo check`
 
+自动编译并运行全部示例：
+
+- `./scripts/run-all.sh`
+
+单个示例编译/运行（以 `01_basics.rs` 为例）：
+
+- 只编译：`cargo build --bin 01_basics`
+- 编译并运行：`cargo run --bin 01_basics`
+
 Markdown 规范检查：
 
 - `./scripts/lint-md.sh`
