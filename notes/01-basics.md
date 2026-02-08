@@ -110,6 +110,20 @@ Rust 没有 class，常用组合是：
 - `println!("runner mode debug={:?}", runner.mode);` 使用 `Debug`。
 - `println!("runner mode display={}", runner.mode);` 使用 `Display`（由我们手写实现）。
 
+`fmt` 底层原理（对照 `printf`）：
+
+- `println!` / `format!` 首先是宏，不是 C 那种 varargs 函数调用。
+- 宏在编译期解析格式串，把它变成 `format_args!` 生成的 `Arguments` 结构。
+- 编译期会检查占位符和参数数量是否匹配、参数是否实现了所需 trait（如 `Display` / `Debug`）。
+- 运行时并不是“按 `%d/%s` 推断内存布局”去读可变参数，而是按 `Arguments` 中记录的格式片段逐个调用对应 trait 的 `fmt` 方法输出。
+- 每个参数以“已知类型 + trait 行为”参与格式化，不依赖 C ABI 的可变参数约定。
+
+性能和行为上你可这样理解：
+
+- `println!` 通常直接把格式化结果写到输出流，不必先构造 `String`。
+- `format!` 会构造并返回一个 `String`（会有分配）。
+- 类型/占位符不匹配在编译期报错，而不是运行时未定义行为。
+
 ### `!` 这个符号是什么意思
 
 在你当前看到的代码里，`!` 主要有两种含义：
