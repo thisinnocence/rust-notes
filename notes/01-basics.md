@@ -65,6 +65,7 @@ cargo run --bin 01_basics
 | `isize`/`usize` | 与指针位宽一致的整数 | `intptr_t`/`uintptr_t` |
 | `f32`/`f64` | 浮点数 | `float`/`double` |
 | `()` | 单元类型（无有效值） | 近似于 `void` 语义位 |
+| `&T` / `&mut T` | 借用引用（只读 / 可变） | 语义近似 `const T&` / `T&`（但受借用规则约束） |
 | `&str` | 借用字符串切片（UTF-8） | 近似 `const char* + len` 语义 |
 | `String` | 拥有所有权的可增长字符串 | 近似 `std::string` |
 | `[T; N]` | 固定长度数组 | `T[N]` / `std::array<T, N>` |
