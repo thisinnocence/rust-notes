@@ -119,3 +119,14 @@ Rust 没有像 Go 那样“绝对单一”的风格工具文化，但工程效�
 - Qt Coding Style: <https://wiki.qt.io/Qt_Coding_Style>
 - Prettier Option Philosophy: <https://prettier.io/docs/next/option-philosophy>
 - Black（The uncompromising formatter）: <https://github.com/psf/black>
+
+## 10. 配套代码怎么读（`src/bin/07_style.rs`）
+
+- 这个文件只做一件事：把“命名/缩进/格式”放进可运行代码里直观看。
+- 覆盖点：
+  - 类型/枚举：`UpperCamelCase`
+  - 函数/变量：`snake_case`
+  - 常量：`SCREAMING_SNAKE_CASE`
+  - `match` 与 `impl` 常见排布方式
+- 运行命令：
+  - `cargo run --bin 07_style`
