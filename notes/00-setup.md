@@ -25,9 +25,6 @@ Markdown 规范检查：
 
 - `./scripts/lint-md.sh`
 
-后续会按主题增加：
+一句话总结：
 
-- 基础语法
-- 所有权与借用
-- 错误处理
-- trait 与工程化
+- 先用 `run-all` 跑通全量示例，再按章节逐个深入学习对应 `notes` 与 `src/bin`。
