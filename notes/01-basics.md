@@ -23,6 +23,23 @@ cargo run --bin 01_basics
 - `const` 更接近“真正不可变值”，不是 C 宏替换。
 - `let score = score;` 是 shadowing（新绑定），不是同一个变量改类型。
 
+### 常用关键字速览（不展开版）
+
+按日常写系统代码的高频场景，先记这些：
+
+- 绑定与可变性：`let`、`mut`、`const`、`static`
+- 类型与抽象：`struct`、`enum`、`trait`、`type`、`impl`
+- 流程控制：`if`、`else`、`match`、`for`、`while`、`loop`、`break`、`continue`、`return`
+- 模块与可见性：`mod`、`use`、`pub`、`crate`、`super`、`self`
+- 错误与空值常见搭配：`Result`、`Option`、`match`、`if let`
+- 所有权相关语境高频词：`move`、`ref`、`as`（转换）
+- 并发和不安全边界常见入口：`async`、`await`、`unsafe`
+
+学习建议：
+
+- 第一轮先做到“看到关键字知道大概作用”。
+- 第二轮结合所有权和 trait 再精确理解语义边界。
+
 ## 2. 控制流
 
 示例覆盖：
