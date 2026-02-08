@@ -9,5 +9,7 @@ set -euo pipefail
 # 使用 pnpm dlx 临时执行 markdownlint-cli：
 # - 不需要全局安装（global install）
 # - 每次按包名解析并执行 CLI，适合仓库内统一检查（lint）
+# - 首次运行通常会先出现 resolved/downloaded/added 等下载日志
+# - 依赖准备完成后会立即执行 lint；若无违规，CLI 默认静默成功
 # - 检查目标为 notes 目录下全部 Markdown 文件
 pnpm dlx markdownlint-cli notes/*.md
