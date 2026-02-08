@@ -4,7 +4,7 @@ fn string_demo() {
     let mut s = String::from("  rust stdlib 101  ");
     println!("raw={:?}", s);
 
-    // 这里的 `s` 是可变绑定（`mut`），所以允许重新赋值。
+    // 这里的 `s` 是可变绑定（`mut`，来自 mutable），所以允许重新赋值。
     // `trim()` 返回借用视图 `&str`，`to_string()` 会创建一个新的 `String`。
     // 新值赋给 `s` 后，旧的 `String` 在此处被 drop 并释放。
     s = s.trim().to_string();
