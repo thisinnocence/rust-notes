@@ -37,6 +37,9 @@ fn sort_demo() {
 }
 
 fn map_set_demo() {
+    // 这里显式写了类型，便于学习阅读。
+    // 实战里也可省略为 `let mut m = HashMap::new();`，
+    // 编译器会根据后续 insert 推断出 `HashMap<&str, i32>`（体验近似 C++ auto）。
     let mut m: HashMap<&str, i32> = HashMap::new();
     m.insert("threads", 8);
     m.insert("workers", 4);
