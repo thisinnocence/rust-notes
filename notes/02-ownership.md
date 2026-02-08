@@ -83,7 +83,33 @@ cargo run --bin 02_ownership
 
 一句话：先单所有权，再共享；先借用，再加指针层。
 
-## 6. 常见报错应对（Ownership 维度）
+## 6. RAII / new-delete / GC 的对比（迁移必看）
+
+| 模型 | 释放时机 | 典型风险 | 与 Rust 的关系 |
+| --- | --- | --- | --- |
+| C 手动管理（`malloc/free`） | 人工调用 `free` | 泄漏、UAF、double free | Rust 把释放责任放入所有权规则，减少人工配对 |
+| C++ `new/delete` | 人工 `delete`（或借助 RAII 包装） | 漏删、重复删、异常路径遗漏 | Rust 默认不暴露“裸 delete 流程”给日常代码 |
+| C++ RAII（栈对象/智能指针） | 作用域退出自动析构 | 共享可变/别名约束仍需人工 discipline | Rust 把 RAII + 所有权约束做成语言默认 |
+| GC 语言（Go/Java 等） | 由 GC 回收器决定 | 回收时机不可精确控制、暂停/吞吐权衡 | Rust 无 GC 运行时，释放时机更可预测 |
+
+### 6.1 和 C++ RAII 的共通点
+
+- 都强调作用域退出时自动清理资源。
+- 都鼓励把资源生命周期绑定到对象生命周期。
+
+### 6.2 Rust 相比 C++ RAII 的强化点
+
+- move/借用规则是语言级强制，不依赖团队约定。
+- “多读或独写”在类型层表达，不靠代码评审口头约束。
+- 默认路径下更少出现 `new/delete` 对应的配对失误类问题。
+
+### 6.3 和 GC 模型的边界
+
+- Rust 不靠 tracing GC 回收对象。
+- 对象释放通常在作用域结束时触发，时机可预测。
+- 代价是前期需要更明确地建模所有权与借用关系。
+
+## 7. 常见报错应对（Ownership 维度）
 
 - “use of moved value”：
   - 解决：改借用（`&T`/`&mut T`）或显式 `clone`。
@@ -92,14 +118,14 @@ cargo run --bin 02_ownership
 - 生命周期相关错误：
   - 解决：先简化函数签名，再明确返回借用来源。
 
-## 7. 配套代码怎么读（`src/bin/02_ownership.rs`）
+## 8. 配套代码怎么读（`src/bin/02_ownership.rs`）
 
 - `takes_ownership`：演示 move。
 - `borrow_read`：演示不可变借用。
 - `borrow_mut`：演示可变借用。
 - `clone` 对照：何时复制数据，何时只借用。
 
-## 8. 跨主题内容跳转
+## 9. 跨主题内容跳转
 
 - 错误模型（`Result<T, E>`、`?`）：见 `notes/03-result.md`。
 - trait/抽象设计：见 `notes/04-trait.md`。
