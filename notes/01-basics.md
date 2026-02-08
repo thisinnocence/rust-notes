@@ -45,7 +45,29 @@ cargo run --bin 01_basics
 - 关键字解决“这是什么构造”。
 - 语法符号解决“这些构造如何拼起来”。
 
-## 3. 控制流与表达式风格
+## 3. 基本数据类型速览
+
+| Rust 类型 | 说明 | C/C++ 对照 |
+| --- | --- | --- |
+| `bool` | 布尔值（`true`/`false`） | `bool` |
+| `char` | Unicode 标量值（4 字节） | `char` 在 C/C++ 常是 1 字节字符单元 |
+| `i8`..`i128` | 有符号整数 | `int8_t`..`int64_t`（C++ 常见到 64 位） |
+| `u8`..`u128` | 无符号整数 | `uint8_t`..`uint64_t` |
+| `isize`/`usize` | 与指针位宽一致的整数 | `intptr_t`/`uintptr_t` |
+| `f32`/`f64` | 浮点数 | `float`/`double` |
+| `()` | 单元类型（无有效值） | 近似于 `void` 语义位 |
+| `&str` | 借用字符串切片（UTF-8） | 近似 `const char* + len` 语义 |
+| `String` | 拥有所有权的可增长字符串 | 近似 `std::string` |
+| `[T; N]` | 固定长度数组 | `T[N]` / `std::array<T, N>` |
+| `&[T]` | 切片（借用的连续区间） | 近似 `pointer + length` 视图 |
+| `(T1, T2, ...)` | 元组 | C++ 没有同语法，接近 `std::tuple` |
+
+补充：
+
+- Rust 整数默认不做隐式窄化/扩宽转换，跨类型通常要显式转换。
+- `str` 本体是 DST（动态大小类型），实际使用通常是 `&str`。
+
+## 4. 控制流与表达式风格
 
 本章核心：Rust 的 `if` / `match` 是表达式，不只是语句。
 
@@ -74,7 +96,7 @@ let stop_at = loop {
 - `break` 可用于三类循环，不与 `loop` 绑定。
 - `break value` 主要用于 `loop` 作为表达式时返回值。
 
-## 4. 函数与类型写法
+## 5. 函数与类型写法
 
 本例函数：
 
@@ -95,7 +117,7 @@ let stop_at = loop {
 - 不是 C 的裸指针语义；受借用规则保护。
 - `&T` 只读，`&mut T` 可写且独占。
 
-## 5. Struct / Trait：Rust 对应“类与接口”的方式
+## 6. Struct / Trait：Rust 对应“类与接口”的方式
 
 Rust 没有 class，常见建模组合是：
 
@@ -109,46 +131,46 @@ Rust 没有 class，常见建模组合是：
 - `impl TaskRunner`：`new`/`run` 方法
 - `trait Describe` + `impl Describe for TaskRunner`：接口能力实现
 
-## 6. 语法解码
+## 7. 语法解码
 
-### 5.1 derive Debug 是什么
+### 7.1 derive Debug 是什么
 
 - attribute（属性），作用于类型定义。
 - `derive(Debug)` 自动生成 `Debug` trait 实现。
 - 有了它才能用 `println!("{:?}", value)`。
 
-### 5.2 `println!` / `fmt` 和 `printf` 的关键区别
+### 7.2 `println!` / `fmt` 和 `printf` 的关键区别
 
 - `println!` 是宏，不是 C 风格 varargs 函数。
 - 编译期检查格式与参数是否匹配。
 - `{:?}` 需要 `Debug`；`{}` 需要 `Display`。
 - 不匹配会在编译期报错，而非运行期未定义行为。
 
-### 5.3 `!` 是什么
+### 7.3 `!` 是什么
 
 在本章里，`!` 有两类常见含义：
 
 - 宏调用标记：`println!`、`format!`、`matches!`、`write!`
 - 逻辑非运算：`!is_fast`
 
-### 5.4 Rust 宏 vs C 宏 vs C++ 模板
+### 7.4 Rust 宏 vs C 宏 vs C++ 模板
 
 - C 宏：文本替换，类型不参与。
 - C++ 模板：类型系统内的编译期泛型机制。
 - Rust 宏：基于 token/语法规则展开，不是纯文本替换。
 
-### 5.5 => 是什么 对照 TS
+### 7.5 => 是什么 对照 TS
 
 - 在 Rust 中，`=>` 主要用于 `match` 分支和 `macro_rules!` 规则。
 - 不是 TS 那种箭头函数定义语法。
 
-### 5.6 为什么类型写在后面：`name: Type`
+### 7.6 为什么类型写在后面：`name: Type`
 
 - 变量、字段、参数统一语法形态。
 - 阅读时先看语义名，再看具体类型。
 - 与类型推断结合后更统一。
 
-## 7. 示例覆盖总览
+## 8. 示例覆盖总览
 
 对应示例：[`../src/bin/01_basics.rs`](../src/bin/01_basics.rs)。
 
@@ -161,7 +183,7 @@ Rust 没有 class，常见建模组合是：
 - 宏：`println!`、`matches!`、`sum_i32!`
 - 引用：`&T`、`*r`、`{:p}` 地址打印
 
-## 8. 关键提醒
+## 9. 关键提醒
 
 - 先记“关键词 + 大概作用”，再追求精确语义。
 - 控制流要优先建立“表达式化”思维（`if/match` 产值）。
