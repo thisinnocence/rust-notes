@@ -115,7 +115,12 @@ Rust 的关键在于“语言语义 + 包管理 + 构建”是一套统一体验
 ### 8.3 Infra（Linux / 虚拟化 / QEMU 周边）
 
 - Linux 内核：
-- 官方文档明确 Rust 已在主线（v6.1 起）并持续推进，但当前仍属实验/开发中，尚无面向终端用户的 in-tree 生产级 Rust 驱动作为默认路径。
+- Rust 在 Linux 主线（v6.1 起）持续推进。
+  在 2025 年 12 月 Maintainers Summit 后，内核社区已明确
+  “Rust 不再是实验”，并提交了移除文档里
+  “The Rust experiment” 段落的补丁
+  （`rust: conclude the Rust experiment`）。
+- 同时要注意：这不等于“所有架构/配置/工具链都已完全成熟”，社区仍在持续补齐平台与工具链覆盖。
 - QEMU：
 - 官方文档已经有 Rust 开发章节与样例设备，构建系统也引入 Rust 依赖管理，但整体仍是“渐进引入”而非“全面 Rust 化”。
 - 虚拟化周边：
