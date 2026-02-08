@@ -80,6 +80,8 @@ trait Describe {
     fn describe(&self) -> String;
 }
 
+// 这里的 `for` 属于 trait 实现语法：`impl Trait for Type`。
+// 含义是“为 TaskRunner 实现 Describe”，不是控制流循环关键字。
 impl Describe for TaskRunner {
     fn describe(&self) -> String {
         format!("TaskRunner(name={}, mode={:?})", self.name, self.mode)
