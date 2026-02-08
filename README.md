@@ -22,78 +22,61 @@
 - 开发环境：VSCode Remote。
 - 交互方式：命令行驱动 AI 完成代码与文档迭代。
 
-## 当前目录
-
-```text
-.
-├── Cargo.toml
-├── Cargo.lock
-├── README.md
-├── notes/
-│   ├── 00-setup.md
-│   ├── 01-basics.md
-│   ├── 02-ownership.md
-│   ├── 03-result.md
-│   ├── 04-trait.md
-│   ├── 05-build.md
-│   ├── 06-style.md
-│   ├── 07-module.md
-│   ├── 08-memory.md
-│   ├── 09-concurrency.md
-│   ├── 10-async.md
-│   ├── 11-async-advanced.md
-│   ├── 12-unsafe.md
-│   ├── 13-ffi.md
-│   ├── 14-lifetime.md
-│   ├── 15-testing.md
-│   ├── 16-perf.md
-│   └── 17-error-handling.md
-├── scripts/
-│   └── lint-md.sh
-└── src/
-    ├── main.rs
-    └── bin/
-        ├── 01_basics.rs
-        ├── 02_ownership.rs
-        ├── 03_result.rs
-        ├── 04_trait.rs
-        ├── 05_build.rs
-        ├── 06_style.rs
-        ├── 07_module.rs
-        ├── 08_memory.rs
-        ├── 09_concurrency.rs
-        ├── 10_async.rs
-        ├── 11_async_advanced.rs
-        ├── 12_unsafe_boundary.rs
-        ├── 13_ffi.rs
-        ├── 14_lifetime.rs
-        ├── 15_testing.rs
-        ├── 16_perf.rs
-        └── 17_error.rs
-```
-
 ## 学习路径（章节对应）
 
-| 章节 | 主题 | 示例 |
-| --- | --- | --- |
-| 00 | 环境与工程结构 | - |
-| 01 | 基础语法 | `01_basics.rs` |
-| 02 | 所有权与借用 | `02_ownership.rs` |
-| 03 | Result 与错误处理入门 | `03_result.rs` |
-| 04 | Struct/Enum/Trait | `04_trait.rs` |
-| 05 | Build + Ecosystem | `05_build.rs` |
-| 06 | Style | `06_style.rs` |
-| 07 | 模块系统 | `07_module.rs` |
-| 08 | 内存模型与布局 | `08_memory.rs` |
-| 09 | 并发 | `09_concurrency.rs` |
-| 10 | 异步（基础） | `10_async.rs` |
-| 11 | 异步（进阶） | `11_async_advanced.rs` |
-| 12 | unsafe 边界 | `12_unsafe_boundary.rs` |
-| 13 | FFI | `13_ffi.rs` |
-| 14 | 生命周期 | `14_lifetime.rs` |
-| 15 | 测试策略 | `15_testing.rs` |
-| 16 | 性能工程 | `16_perf.rs` |
-| 17 | 错误处理工程化 | `17_error.rs` |
+1. `00` 环境与工程结构
+   - 笔记：[`notes/00-setup.md`](notes/00-setup.md)
+2. `01` 基础语法
+   - 笔记：[`notes/01-basics.md`](notes/01-basics.md)
+   - 示例：[`src/bin/01_basics.rs`](src/bin/01_basics.rs)
+3. `02` 所有权与借用
+   - 笔记：[`notes/02-ownership.md`](notes/02-ownership.md)
+   - 示例：[`src/bin/02_ownership.rs`](src/bin/02_ownership.rs)
+4. `03` Result 与错误处理入门
+   - 笔记：[`notes/03-result.md`](notes/03-result.md)
+   - 示例：[`src/bin/03_result.rs`](src/bin/03_result.rs)
+5. `04` Struct/Enum/Trait
+   - 笔记：[`notes/04-trait.md`](notes/04-trait.md)
+   - 示例：[`src/bin/04_trait.rs`](src/bin/04_trait.rs)
+6. `05` Build + Ecosystem
+   - 笔记：[`notes/05-build.md`](notes/05-build.md)
+   - 示例：[`src/bin/05_build.rs`](src/bin/05_build.rs)
+7. `06` Style
+   - 笔记：[`notes/06-style.md`](notes/06-style.md)
+   - 示例：[`src/bin/06_style.rs`](src/bin/06_style.rs)
+8. `07` 模块系统
+   - 笔记：[`notes/07-module.md`](notes/07-module.md)
+   - 示例：[`src/bin/07_module.rs`](src/bin/07_module.rs)
+9. `08` 内存模型与布局
+   - 笔记：[`notes/08-memory.md`](notes/08-memory.md)
+   - 示例：[`src/bin/08_memory.rs`](src/bin/08_memory.rs)
+10. `09` 并发
+    - 笔记：[`notes/09-concurrency.md`](notes/09-concurrency.md)
+    - 示例：[`src/bin/09_concurrency.rs`](src/bin/09_concurrency.rs)
+11. `10` 异步（基础）
+    - 笔记：[`notes/10-async.md`](notes/10-async.md)
+    - 示例：[`src/bin/10_async.rs`](src/bin/10_async.rs)
+12. `11` 异步（进阶）
+    - 笔记：[`notes/11-async-advanced.md`](notes/11-async-advanced.md)
+    - 示例：[`src/bin/11_async_advanced.rs`](src/bin/11_async_advanced.rs)
+13. `12` unsafe 边界
+    - 笔记：[`notes/12-unsafe.md`](notes/12-unsafe.md)
+    - 示例：[`src/bin/12_unsafe_boundary.rs`](src/bin/12_unsafe_boundary.rs)
+14. `13` FFI
+    - 笔记：[`notes/13-ffi.md`](notes/13-ffi.md)
+    - 示例：[`src/bin/13_ffi.rs`](src/bin/13_ffi.rs)
+15. `14` 生命周期
+    - 笔记：[`notes/14-lifetime.md`](notes/14-lifetime.md)
+    - 示例：[`src/bin/14_lifetime.rs`](src/bin/14_lifetime.rs)
+16. `15` 测试策略
+    - 笔记：[`notes/15-testing.md`](notes/15-testing.md)
+    - 示例：[`src/bin/15_testing.rs`](src/bin/15_testing.rs)
+17. `16` 性能工程
+    - 笔记：[`notes/16-perf.md`](notes/16-perf.md)
+    - 示例：[`src/bin/16_perf.rs`](src/bin/16_perf.rs)
+18. `17` 错误处理工程化
+    - 笔记：[`notes/17-error-handling.md`](notes/17-error-handling.md)
+    - 示例：[`src/bin/17_error.rs`](src/bin/17_error.rs)
 
 ## 常用命令
 
