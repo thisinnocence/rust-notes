@@ -2,6 +2,12 @@ use std::fmt;
 
 const MAX_RETRY: u32 = 3;
 
+macro_rules! sum_i32 {
+    ($a:expr, $b:expr) => {
+        $a + $b
+    };
+}
+
 // #[derive(Debug)] 会自动为类型生成 Debug trait 实现，
 // 这样就可以用 {:?} 打印调试信息。
 #[derive(Debug)]
@@ -83,6 +89,7 @@ fn main() {
 
     println!("language={language}, score={score}");
     println!("sum={}", add(3, 5));
+    println!("sum via macro={}", sum_i32!(10, 20));
 
     // 控制流：if / for / while / loop / match
     let level = if score >= 90 { "A" } else { "B" };
