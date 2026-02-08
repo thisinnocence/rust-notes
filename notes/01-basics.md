@@ -110,6 +110,25 @@ Rust 没有 class，常用组合是：
 - `println!("runner mode debug={:?}", runner.mode);` 使用 `Debug`。
 - `println!("runner mode display={}", runner.mode);` 使用 `Display`（由我们手写实现）。
 
+### `!` 这个符号是什么意思
+
+在你当前看到的代码里，`!` 主要有两种含义：
+
+- 宏调用标记：`println!`、`format!`、`matches!`、`write!`。
+- 逻辑非运算符：`!is_fast`，把 `true/false` 取反。
+
+为什么宏要写 `!`：
+
+- 这是 Rust 区分“普通函数调用”和“宏展开”的语法标记。
+- 宏在编译阶段展开，能接受可变参数和特定语法形态（例如 `println!("x={}", x)` 这种格式串 + 参数列表）。
+- 你可以先把它理解为“带语法能力的代码生成器入口”。
+
+和 C/C++ 对照：
+
+- C 的 `printf` 是普通函数（或库函数调用），变参靠 ABI 与格式串约定。
+- Rust 的 `println!` 是宏，先展开，再做编译期格式与类型检查。
+- 所以 Rust 在这类打印场景里更强调编译期安全。
+
 ### `name: String` 为什么类型在后面
 
 - Rust 的变量/字段声明统一是 `name: Type`。

@@ -145,8 +145,11 @@ fn main() {
 
     // "接口" 对应：trait
     println!("describe={}", runner.describe());
+    // 这里的 `println!` / `format!` / `matches!` / `write!` 末尾 `!` 表示“宏调用”。
     println!("runner mode debug={:?}", runner.mode);
     println!("runner mode display={}", runner.mode);
+    let is_fast = matches!(runner.mode, Mode::Fast);
+    println!("is_fast={is_fast}, not_fast={}", !is_fast);
 
     // 引用与地址：&T 是借用（reference），不是 C 的裸指针。
     // 借用本身会指向某个地址，可用 {:p} 打印。
