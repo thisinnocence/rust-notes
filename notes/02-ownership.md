@@ -43,7 +43,7 @@ cargo run --bin 02_ownership
 
 先看一张迁移表：
 
-术语说明（首次出现）：
+术语说明：
 
 - `Rc` = `Reference Counted`，单线程引用计数智能指针。
 - `Arc` = `Atomically Reference Counted`，原子引用计数智能指针，支持多线程共享。
