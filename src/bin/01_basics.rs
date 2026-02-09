@@ -17,6 +17,7 @@ macro_rules! sum_i32 {
 
 // #[derive(Debug)] 会自动为类型生成 Debug trait 实现，
 // 这样就可以用 {:?} 打印调试信息。
+// 其中 `:?` 表示“按 Debug 格式输出这个值”。
 #[derive(Debug)]
 enum Mode {
     Fast,
@@ -61,6 +62,8 @@ struct TaskRunner {
     mode: Mode,
 }
 
+// `impl Type { ... }` 可类比 Go 的 receiver 方法集合 / C++ 成员函数实现，
+// 并且把方法天然收敛到类型作用域里，边界更清晰。
 impl TaskRunner {
     // `-> Self` 里的 `Self` 是类型层关键字，这里等价于 `TaskRunner`。
     fn new(name: &str, mode: Mode) -> Self {
@@ -71,6 +74,8 @@ impl TaskRunner {
     }
 
     // `&self` 里的 `self` 是值层接收者，表示当前实例的只读借用。
+    // `&self` 表示只读借用：可读字段，不能修改结构体成员。
+    // 若要修改成员，方法签名应写为 `&mut self`。
     fn run(&self, retries: u32) {
         println!("run name={}, mode={:?}, retries={retries}", self.name, self.mode);
     }
@@ -126,12 +131,17 @@ fn inspect_ref(v: &i32) {
 
 fn main() {
     // 关键字与变量：let / mut / const / shadowing
+    // `let` 用于声明“新绑定”，在 Rust 里不能省略。
+    // 不写 `let` 就不是变量声明语法，会编译报错。
     let language = "rust";
+    // `mut` 是 `mutable` 的缩写，表示这个绑定允许被修改。
     let mut score = 88;
     score += 7;
     let score = score; // shadowing: 绑定为新的不可变变量
 
+    // 这行可类比 Python 的 f-string：`print(f"language={language}, score={score}")`。
     println!("language={language}, score={score}");
+    // `{}` 是通用格式占位符，默认按 `Display` 格式输出参数值。
     println!("sum={}", add(3, 5));
     println!("sum via macro={}", sum_i32!(10, 20));
 
@@ -140,10 +150,15 @@ fn main() {
     println!("level via if={level}");
     println!("level via match={}", classify(score));
 
+    // `0..3` 是左闭右开区间 `[0, 3)`，所以 i 依次为 0、1、2。
+    // 底层会构造 `Range<T>`；之所以能用于 `for`，是因为该范围类型实现了迭代相关 trait。
+    // 常见是整数范围（以及 char 范围）可直接迭代。
     for i in 0..3 {
         println!("for i={i}");
     }
 
+    // Rust 类似 Go：`for/if/while` 条件不写 `()`，但代码块必须写 `{}`。
+    // 这是有意设计，用来减少语法噪音并降低歧义。
     for i in 0..10 {
         if i == 4 {
             println!("for break at i={i}");
@@ -214,6 +229,9 @@ fn main() {
     println!("deref *r={}", *r);
 
     // 常见基础类型：Option
+    // `Some/None` 是标准库 `Option<T>` 的两个枚举变体。
+    // 完整路径可写作：`core::option::Option::{Some, None}`（或 `std::option::Option::{Some, None}`）。
+    // 这里可直接写短名，是因为 `Option` 在 prelude 中，且 `match` 已知目标类型是 `Option<_>`。
     match maybe_timeout(&runner.mode) {
         Some(ms) => println!("timeout={ms}ms"),
         None => println!("timeout=none"),
@@ -221,6 +239,7 @@ fn main() {
 
     // 元组是 Rust 内建类型（这里是 (&str, i32)），可类比 C++ std::pair 语义。
     // Rust 访问方式是 .0 / .1，而不是 .first / .second。
+    // 也可直接 `println!("{:?}", pair)` 打印整个复合值（元组默认实现 `Debug`）。
     let pair = ("worker", 8);
     println!("tuple pair: role={}, count={}", pair.0, pair.1);
 
