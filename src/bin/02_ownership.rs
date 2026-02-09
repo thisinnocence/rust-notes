@@ -4,6 +4,8 @@ use std::rc::{Rc, Weak};
 #[derive(Debug)]
 struct Node {
     val: i32,
+    // `next` 不是 C 的裸指针字段，而是“可空 + 拥有所有权”的安全指针封装。
+    // `Some(Box<Node>)` 表示有后继节点，`None` 表示链表到尾。
     next: Option<Box<Node>>,
 }
 
@@ -14,10 +16,15 @@ struct SinglyList {
 
 impl SinglyList {
     fn push_front(&mut self, val: i32) {
+        // 语法技巧：
+        // 1) `val,` 是字段初始化简写，等价于 `val: val`。
+        // 2) `self.head.take()` 会把旧 head 搬出并把原位设为 `None`，
+        //    这样可在不克隆的情况下把“旧链表头”接到新节点的 next。
         let new_head = Box::new(Node {
             val,
             next: self.head.take(),
         });
+        // 新节点成为链表头：`Some(new_head)` 表示当前 head 现在“有值”。
         self.head = Some(new_head);
     }
 
@@ -30,6 +37,8 @@ impl SinglyList {
     }
 }
 
+// `s: String` 会接收所有权（move），不是参数副本复制。
+// 调用方把 String 传进来后，原变量默认不可再使用（除非先 clone）。
 fn takes_ownership(s: String) {
     println!("owned: {s}");
 }
