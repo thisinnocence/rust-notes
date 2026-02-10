@@ -1,4 +1,9 @@
 //! 06_build: 通过可运行示例理解 Rust 构建系统关键点。
+//! `//!` 是 crate/module 级文档注释（inner doc comment）；
+//! `///` 则用于后面紧跟的具体项（函数、结构体等）。
+//! 注释速记：
+//! - `// ...`：普通单行注释（函数体里最常用）。
+//! - `/* ... */`：普通块注释。
 //!
 //! 运行：
 //! cargo run --bin 06_build
@@ -10,6 +15,8 @@
 //! 4) file target/debug/06_build
 //! 5) ldd target/debug/06_build    (Linux + 动态链接时可用)
 
+// `use std::env;`：`std` 是外部 crate，`env` 是该 crate 下的模块。
+// 对照：访问当前 crate 自己的模块通常写成 `crate::...`。
 use std::env;
 
 /// 类型名使用 UpperCamelCase。
@@ -55,6 +62,7 @@ fn target_arch_name() -> &'static str {
 }
 
 fn build_info() -> BuildInfo {
+    // 结构体字面量按字段赋值，语义接近 C 的 `.field = value`。
     BuildInfo {
         profile: current_profile(),
         target_os: target_os_name(),
@@ -81,3 +89,12 @@ fn main() {
     // 3) 默认 std 程序在 Linux 常见会链接 libc（动态或静态，取决于目标和配置）。
     // 4) 若进入 no_std/bare-metal，会切到另一套启动与运行支持模型。
 }
+
+// `env::var` 写法对照（功能等价）：
+// 1) 当前写法：先 `use std::env;`，再 `env::var("KEY")`。
+// 2) 全路径：`std::env::var("KEY")`（不需要 `use std::env;`）。
+// 3) 导入函数：`use std::env::var;`，再 `var("KEY")`。
+//
+// 模块层级补充：
+// - Rust 的 `mod` 可以嵌套 `mod`，形成路径树（如 `a::b::f`）。
+// - 语义上接近 C++ 的嵌套 namespace。
