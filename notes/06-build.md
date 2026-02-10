@@ -112,7 +112,42 @@ rustc main.rs --extern mylib=build/libmylib.rlib -L dependency=build -o build/ap
 
 ## 2. Rust 的工程基础模型
 
-Rust 以 Cargo 统一“包管理 + 构建 + 工作流”，并把 `rustc` 包装成可复用流水线：
+为什么 Rust 能自然长出 Cargo，而 C/C++ 很难出现“单一事实标准”，底层在于可统一性不同：
+
+- Rust 从语言层就有明确的包边界（crate）、可见性规则（`pub`）和依赖声明入口，工具可以稳定读取同一套语义。
+- Rust 不依赖头文件文本拼接模型，接口和实现在同一语义系统里，减少“声明与实现漂移”带来的构建不确定性。
+- crate 元数据可机器化描述（名称、版本、特性、依赖图），天然适合统一做解析、锁定、缓存和复现构建。
+- C/C++ 历史包袱更重：源码边界、构建系统、包管理、ABI 约定长期分裂（Make/CMake/Bazel + vcpkg/conan/系统包管理并存），很难收敛到单一工具链入口。
+
+所以不是“C/C++ 做不到包管理”，而是“语言与历史生态没有给出一个像 crate 这样天然统一的工程边界”，导致难以形成 Cargo 这种默认共识。
+
+这和 Go 的确很像，但不完全一样：
+
+- 相似点：都把“语言语义 + 构建/依赖工作流”做了强绑定，降低工程冷启动成本。
+- Go 的核心边界更偏 `module/package`；Rust 的核心边界是 `crate`（可执行与库统一建模更强）。
+- Go 在服务端工程路径更直接；Rust 额外覆盖 `no_std`/FFI/底层库产物（`staticlib`/`cdylib`）这类系统场景。
+- 两者都比 C/C++ 更容易形成统一包管理，但 Rust 的设计目标对“跨层交付（应用到系统库）”约束更细。
+
+为什么这些特质会让很多 Rust 项目“可以不写 Makefile/CMake”：
+
+- 依赖解析、构建顺序、profile（debug/release）、目标产物约定都被 Cargo 内建统一，避免每个项目重复造构建脚本。
+- 语言级模块/可见性与构建边界一致，工具不需要额外维护一套“源码组织到构建图”的映射层。
+- 锁文件 + 语义化版本 + 可缓存构建目录，让“可复现 + 增量构建 + CI 稳定性”成为默认能力，而不是手工拼装能力。
+- 因为默认路径足够强，生态可以围绕同一入口沉淀（`build/test/fmt/lint/publish`），包管理自然变强且可组合。
+
+注意这不是绝对“抛弃” Make/CMake：当项目涉及复杂 C/C++/汇编混编、特殊链接脚本或跨平台系统集成时，仍可能引入它们；但在纯 Rust 或以 Rust 为主的工程里，Cargo 通常已覆盖主流程。
+
+即使在 Linux，工程实践里通常也是 `cargo` 作为日常入口（`build/run/test`），`rustc` 作为底层编译器被 Cargo 调用；只有极简或高度定制链路才会直接手写 `rustc`/Makefile。
+
+Rust 以 Cargo 统一“包管理 + 构建 + 工作流”，并把 `rustc` 包装成可复用流水线。
+
+Cargo 诞生时间线:
+
+- 2014-11-20：Cargo 与 crates.io 对外宣布可用（Rust 官方博客发布 `Cargo: Rust's community crate host`）。
+- 2015-05-15：Rust 1.0 正式发布，Cargo/crates.io 随 1.0 进入官方稳定叙事，成为默认工程工作流。
+- 到今天（2026-02-10），官方安装路径（`rustup`）仍默认同时安装 `rustc` 与 `cargo`，延续这套标准入口。
+
+Cargo 的核心目录与文件：
 
 - `Cargo.toml`：依赖、版本、构建元数据。
 - `Cargo.lock`：锁定解析结果，保证复现构建。
@@ -283,7 +318,7 @@ Rust 对 AI 协作开发的价值在于：
 - Embedded Rust Book: <https://docs.rust-embedded.org/book/>
 - `embedded-hal` 1.0: <https://blog.rust-embedded.org/embedded-hal-v1/>
 - probe-rs: <https://probe.rs/docs/>
-- Ubuntu 氧化讨论: <https://discourse.ubuntu.com/t/carefully-but-purposefully-oxidising-ubuntu/56995>
+- Ubuntu: <https://discourse.ubuntu.com/t/carefully-but-purposefully-oxidising-ubuntu/56995>
 - uv: <https://github.com/astral-sh/uv>
 - pydantic v2: <https://pydantic.dev/articles/pydantic-v2>
 - SWC: <https://swc.rs/>
