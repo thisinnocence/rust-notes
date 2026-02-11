@@ -1,0 +1,8 @@
+[package]
+name = "rust_bridge"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+# 生成可被 C/C++ 链接的动态库。
+crate-type = ["cdylib"]
