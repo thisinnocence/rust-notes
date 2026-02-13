@@ -12,11 +12,15 @@ usage() {
 }
 
 mode="format"
+# 仅支持一个可选参数 --check
+# 默认是 format 模式, 传 --check 时切换为 check 模式
 if [[ "${1:-}" == "--check" ]]; then
   mode="check"
+  # 移除已消费的参数, 方便后续检测是否还有非法参数
   shift
 fi
 
+# 到这里参数应该被消费完毕, 否则视为非法用法
 if [[ $# -ne 0 ]]; then
   usage
   exit 1
@@ -28,6 +32,7 @@ if ! command -v rustfmt >/dev/null 2>&1; then
   exit 1
 fi
 
+# 扫描 src 下所有 .rs 文件并排序, 结果读入数组 files
 mapfile -t files < <(rg --files src -g '*.rs' | sort)
 
 if [[ ${#files[@]} -eq 0 ]]; then
