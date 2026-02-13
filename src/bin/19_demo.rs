@@ -113,7 +113,10 @@ impl StudentStore {
         };
         if old_name != name {
             self.remove_name_index(&old_name, id);
-            self.name_index.entry(name.to_string()).or_default().insert(id);
+            self.name_index
+                .entry(name.to_string())
+                .or_default()
+                .insert(id);
         }
 
         let student = self
@@ -171,7 +174,10 @@ fn print_students(students: &[&Student]) {
 
     println!("{:<4} {:<12} {:<4} {:<12}", "id", "name", "age", "class");
     for s in students {
-        println!("{:<4} {:<12} {:<4} {:<12}", s.id, s.name, s.age, s.class_name);
+        println!(
+            "{:<4} {:<12} {:<4} {:<12}",
+            s.id, s.name, s.age, s.class_name
+        );
     }
 }
 
@@ -226,7 +232,10 @@ fn order_students(store: &StudentStore, field: SortField, direction: SortDirecti
             SortField::Id => a.id.cmp(&b.id),
             SortField::Name => a.name.cmp(&b.name).then_with(|| a.id.cmp(&b.id)),
             SortField::Age => a.age.cmp(&b.age).then_with(|| a.id.cmp(&b.id)),
-            SortField::Class => a.class_name.cmp(&b.class_name).then_with(|| a.id.cmp(&b.id)),
+            SortField::Class => a
+                .class_name
+                .cmp(&b.class_name)
+                .then_with(|| a.id.cmp(&b.id)),
         };
         match direction {
             SortDirection::Asc => ord,

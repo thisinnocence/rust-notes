@@ -37,7 +37,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use super::{sum_pair, Pair};
+    use super::{Pair, sum_pair};
 
     #[test]
     fn test_sum_pair_ok() {

@@ -84,5 +84,8 @@ fn main() {
         flags: h.flags,
         len: h.len,
     };
-    println!("rust header fields: {} {} {} {}", r.magic, r.version, r.flags, r.len);
+    println!(
+        "rust header fields: {} {} {} {}",
+        r.magic, r.version, r.flags, r.len
+    );
 }

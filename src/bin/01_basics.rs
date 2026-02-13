@@ -77,7 +77,10 @@ impl TaskRunner {
     // `&self` 表示只读借用：可读字段，不能修改结构体成员。
     // 若要修改成员，方法签名应写为 `&mut self`。
     fn run(&self, retries: u32) {
-        println!("run name={}, mode={:?}, retries={retries}", self.name, self.mode);
+        println!(
+            "run name={}, mode={:?}, retries={retries}",
+            self.name, self.mode
+        );
     }
 }
 
