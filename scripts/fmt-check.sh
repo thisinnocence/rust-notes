@@ -41,6 +41,7 @@ if [[ ${#files[@]} -eq 0 ]]; then
 fi
 
 if [[ "$mode" == "check" ]]; then
+  # --check 模式下 rustfmt 不会修改文件, 只会检查格式是否符合规范
   echo "[fmt-check] rustfmt --check on src/**/*.rs"
   rustfmt --edition 2024 --check "${files[@]}"
   echo "[fmt-check] done"

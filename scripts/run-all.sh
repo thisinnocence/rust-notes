@@ -10,6 +10,7 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$repo_root"
 
+# 检查是否可以编译通过
 echo "[run-all] cargo check --bins"
 cargo check --bins
 
@@ -18,6 +19,7 @@ echo "[run-all] run all src/bin/*.rs"
 # 按文件名排序后逐个运行，保证和章节编号一致。
 for file in $(ls src/bin/*.rs | sort); do
   bin_name="$(basename "$file" .rs)"
+  # cargo run会自动编译并运行
   echo "[run-all] cargo run --bin $bin_name"
   cargo run --bin "$bin_name"
 done
