@@ -26,16 +26,18 @@ fn sum(start: i32, end: i32) -> i32 {
     for i in start..=end {
         total += i;
     }
+    // 尾表达式返回: 最后一行无分号会作为返回值(等价于 return total;)
+    // 常用写法: 更简洁且和 Rust 的表达式风格一致, return 通常留给提前返回
     total
 }
 
 fn array_demo() {
-    // 固定长度数组, 显式指定类型是 [u32; 5]
+    // 固定长度数组, 显式类型标注是 [u32; 5], 这里的 ; 表示"元素类型;长度"
     let mut nums: [u32; 5] = [1, 2, 3, 4, 5];
     nums[0] = 10;
 
     // 切片类型是 &[u32], 1 和 4 都是索引边界, start..end 表示 [start, end)
-    // 这里是 borrow 语义, 只是借用原数组的一段视图, 不会产生 copy
+    // 这里是不可变借用: let 默认不可变绑定, & 默认不可变借用, 不会产生 copy
     let mid = &nums[1..4];
     let total: u32 = nums.iter().sum();
 
@@ -47,7 +49,7 @@ fn array_demo() {
 }
 
 fn dynamic_array_demo() {
-    // Rust 动态数组是 Vec, 底层在堆上分配, 可类比 C++ 的 new[]
+    // Rust 动态数组是 Vec, 可类比 C++ STL 的 std::vector(底层在堆上, 可扩容)
     let mut heap_arr: Vec<u32> = Vec::with_capacity(5);
     for i in 1..=5 {
         heap_arr.push(i);
