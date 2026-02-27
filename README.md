@@ -8,6 +8,14 @@
 - AI 助手负责小颗粒示例、对照笔记、持续重构文档。
 - 每次改动尽量小提交，方便回看学习轨迹。
 
+## rust 资料
+
+- <https://doc.rust-lang.org/stable/book/>
+- <https://kaisery.github.io/trpl-zh-cn/title-page.html>
+- <https://www.zhihu.com/question/400584073/answer/3665589601>
+- <https://document.kirigaya.cn/docs/rust-tutorial/ch00-00-introduction.html>
+- Rust for Rustaceans: Idiomatic Programming for Experienced Developers
+
 ## AI 协作说明
 
 当前仓库由 AI 协作生成与维护，核心目标：
