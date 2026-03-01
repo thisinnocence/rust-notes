@@ -17,12 +17,37 @@
 - 完成语法/类型检查、单态化、优化、代码生成、链接。
 - 产出二进制、库或中间产物（如汇编、IR、元数据）。
 
+`rustc` 怎么“找到要编译的 `.rs` 文件并形成 crate”，可以分两层看：
+
+- 只看 `rustc`：你先给它一个 crate root（例如 `main.rs` 或 `lib.rs`）；`rustc` 再从 root 里的 `mod` 声明递归展开模块树，把被纳入这棵树的 `.rs` 文件都当作同一个 crate 的源码来编译。
+- 配合 Cargo：Cargo 先根据 `Cargo.toml` 和目录约定识别要构建的 target（如 `src/lib.rs`、`src/main.rs`、`src/bin/*.rs` 等），每个 target 对应一个 crate；然后 Cargo 为每个 crate 组装参数并分别调用 `rustc`。
+- 关键点：Rust 不会像“扫描整个目录下所有 `.rs` 自动全编译”那样工作；未被某个 crate root 模块树纳入的文件，不会进入该 crate 的编译。
+
+只看 `rustc`（先不管 Cargo），再和 `gcc` 做个对应：
+
+- `rustc` 命令行通常只给一个 root 源文件（例如 `rustc main.rs`）。它不是“第一个被扫描文件”，而是“这个 crate 的根文件”。
+- `rustc` 后续要编译哪些 `.rs`，由 root 里的 `mod xxx;` 递归决定（按模块文件命名规则去找 `xxx.rs` 或 `xxx/mod.rs`）。
+  这里“去找”默认是从“声明该 `mod` 的文件所在目录”开始，不是永远从 crate root 目录开始。例如：`src/main.rs` 里 `mod net;` 会找 `src/net.rs` 或 `src/net/mod.rs`；若 `src/net.rs` 里再写 `mod tcp;`，则继续找 `src/net/tcp.rs` 或 `src/net/tcp/mod.rs`。
+  例外是你可以显式改路径：`#[path = "../shared/util.rs"] mod util;` 可把模块指到默认规则之外的位置（含 `..` 上级目录）；`include!("../generated/bindings.rs")` 则是把目标文件内容按文本直接并入当前位置再编译（常见于生成代码）。
+- `rustc` 没有 `gcc -I` 那种“给头文件搜索路径”模型；Rust 接口不靠 `.h`，而靠模块系统与 crate 元数据。
+- 你也不会像 C 那样把同一程序的所有 `.rs` 都逐个传给一次 `rustc` 调用；那样更接近“手工编多个 crate”，而不是“一个 crate 的模块树编译”。
+
 这里先把 `crate` 说清楚（后面会反复出现）：
 
 - 一句话：`crate` 是 Rust 的“编译与发布基本单元”，可以是可执行程序，也可以是库。
 - 类比 C：接近“一个库/一个程序 + 一组源码 + 构建边界”，但 Rust 不依赖 `.h` 头文件体系。
 - 类比 Go：接近 module + package 的组合体里“可独立构建发布”的那层。
 - 类比 Python：比单个 package 更偏“可编译产物单元”，不是纯解释期导入单元。
+
+顺手记一下 Linux 下库 crate 常见产物类型（避免和 C/C++ 的 `.so/.a` 语义混淆）：
+
+- `rlib`：Rust 静态中间库（`*.rlib`），主要给 Rust 链接器流程使用。备注：不等价于 C/C++ 的 `.a`；`rlib` 还携带 Rust 元数据。若要给 C/C++ 侧消费静态库，通常用 `staticlib`（产物是 `.a`）。
+- `dylib`：Rust 动态库（`*.so`），给 Rust 侧依赖，带 Rust 元数据。备注：虽然也是 `.so`，但它不是面向通用 C ABI 的发布形态；跨语言 FFI 通常应使用 `cdylib`。
+- `cdylib`：C ABI 动态库（`*.so`），给 C/其他语言做 FFI 调用。备注：在 Linux 上常见文件名形态是 `lib<name>.so`；它与 `dylib` 的主要区别在 ABI 和使用场景，不在后缀。
+- `staticlib`：静态库（`*.a`），给 C/其他语言链接。
+- `proc-macro`：过程宏库（`*.so`），由 `rustc` 在编译期加载。
+
+另一个易混点：`lib` 也是 `crate-type` 关键字，但它更像“默认库类型别名”，不是单独的文件格式；在 Linux 上通常会落到 `rlib`（并配套元数据）。
 
 只按 `rustc` 理解 `crate root`（先不引入 Cargo）：
 
