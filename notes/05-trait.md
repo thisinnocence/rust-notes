@@ -104,6 +104,100 @@ cargo run --bin 05_trait
 | `impl Trait` | 静态分发 | 单态化，通常更利于内联优化 | 热路径、性能敏感 |
 | `dyn Trait` | 动态分发 | vtable 间接调用 | 插件化、运行时多态 |
 
+补充理解：
+
+- `impl Trait` 更像“编译期决定具体类型”，调用点通常拿到的是单一具体实现。
+- `dyn Trait` 更像“运行时通过统一接口持有不同实现”，通常需要借助引用、`Box` 或其他指针类型。
+- 性能敏感路径优先考虑 `impl Trait`；架构上确实需要可插拔、可异构集合时再考虑 `dyn Trait`。
+
+如果对比 C++ 虚函数，可以这样理解：
+
+- C++ 里 `Base* p = new Derived(); p->f();` 这类“父类指针调用子类重写方法”，本质是运行时通过 vtable 做动态分发。
+- Rust 里最接近这一模型的是 `&dyn Trait` 或 `Box<dyn Trait>`：调用方只知道“这是某个实现了 trait 的对象”，具体类型在运行时决定。
+- 也就是说，`dyn Trait` 更像 C++ 的“抽象基类引用/指针 + virtual function”。
+- 相比之下，`impl Trait` 不太像“父类指针调虚函数”，而更像“模板/泛型实例化后，编译器已经知道具体类型”，因此通常不需要 vtable。
+
+一个粗略映射：
+
+- C++ 模板 / 泛型代码路径，对应 Rust 更接近 `impl Trait` 或泛型约束。
+- C++ `Base&` / `Base*` + `virtual` 调用，对应 Rust 更接近 `&dyn Trait` / `Box<dyn Trait>`。
+
+最小对照片段：
+
+a. `dyn Trait` 对比 C++ 虚函数：
+
+```cpp
+// cpp
+struct Base {
+    virtual void f() = 0;
+};
+
+struct Derived : Base {
+    void f() override {}
+};
+
+Base* p = new Derived();
+p->f();
+```
+
+```rust
+// rust
+trait Base {
+    fn f(&self);
+}
+
+struct Derived;
+
+impl Base for Derived {
+    fn f(&self) {}
+}
+
+let d = Derived;
+let p: &dyn Base = &d;
+p.f();
+```
+
+b. `impl Trait` 对比 C++ 模板：
+
+```cpp
+// cpp
+struct Worker {
+    void f() const {}
+};
+
+template <typename T>
+void print(const T& x) {
+    x.f();
+}
+
+int main() {
+    Worker w;
+    print(w);
+}
+```
+
+```rust
+// rust
+trait Base {
+    fn f(&self);
+}
+
+struct Worker;
+
+impl Base for Worker {
+    fn f(&self) {}
+}
+
+fn print(x: &impl Base) {
+    x.f();
+}
+
+fn main() {
+    let w = Worker;
+    print(&w);
+}
+```
+
 ### 工程实践建议
 
 - 默认采用 `impl Trait`（性能与实现复杂度更平衡）。
