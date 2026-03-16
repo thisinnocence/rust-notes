@@ -6,5 +6,5 @@ edition = "2024"
 [dependencies]
 
 [[bin]]
-name = "demo"
-path = "demos/main.rs"
+name = "day-01"
+path = "demos/day-01.rs"
