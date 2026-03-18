@@ -14,7 +14,7 @@ const APP_NAME: &str = "day-02-simple";
 // `'a` 只是生命周期参数的常用名字，像泛型里常写 `T` 一样。
 // 这里改成 `'b`、`'x`、`'aaa` 都可以，只要前后一致即可。
 // 重点不是名字本身，而是“哪些引用绑在同一个生命周期参数上”。
-// 
+//
 // 1. `User<'a>` 这个类型里面含有一个字段 `name: &'a str`。
 // 2. 这个字段是借用，不拥有数据。
 // 3. 所以 `User<'a>` 的有效使用时间，必须受这个借用约束。
@@ -31,7 +31,8 @@ const APP_NAME: &str = "day-02-simple";
 //    println!("{}", user.name);
 //    如果允许 `user` 比 `&s` 活得更久，这里就会读到悬垂引用。
 #[derive(Debug)]
-struct User<'a> {  // 先声明 `'a`
+struct User<'a> {
+    // 先声明 `'a`
     name: &'a str, // 再使用 `'a`
     age: u8,
 }
@@ -74,11 +75,7 @@ fn status_text(status: Status) -> &'static str {
 fn maybe_nickname(name: &str) -> Option<&str> {
     // TODO 4:
     // 现在规则是长度 <= 3 时返回 Some(name)，否则返回 None
-    if name.len() <= 3 {
-        Some(name)
-    } else {
-        None
-    }
+    if name.len() <= 3 { Some(name) } else { None }
 }
 
 fn parse_age(raw: &str) -> Result<u8, &'static str> {
